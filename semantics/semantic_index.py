@@ -10,7 +10,7 @@ class SemanticIndex:
         self.__metrics = Metrics() 
         
         self.__name = name
-        self.__max_distance_euc = 1.5
+        self.__max_distance = 3
         
         if load_graph:
             self.__owl_terms = self.__get_all_owl_classes()
@@ -40,12 +40,15 @@ class SemanticIndex:
 
         return filter_terms
 
+    #revisar para distancia semantica https://www.geeksforgeeks.org/nlp-wupalmer-wordnet-similarity/
+    #para españon https://codeday.me/es/qa/20190503/633497.html
     def __is_term_related(self, term):
-        term_vector = self.__matrix.query_to_vector(term, frequency=False)
         for owl_term in self.__owl_terms:
-            owl_vector_term = self.__matrix.query_to_vector(owl_term, frequency=False)
-            distance_euc = self.__metrics.euclid_vectors(owl_vector_term, term_vector)
-            if distance_euc < self.__max_distance_euc: 
+            distance = self.__metrics.levenshtein_distance(term, owl_term)
+            if distance < self.__max_distance: 
+                print(owl_term)
+                print(term)
+                print(distance)
                 return True
         return False
 
@@ -77,24 +80,18 @@ class SemanticIndex:
         query_terms = self.__preprocessor.get_tokens(text=query)
         query_vector = self.__matrix.query_to_vector(query_terms, frequency=True)
 
-        #la lista de docuemtnos debe retornar el uuid la distancia
-        #falta filtrar los terminos del query por la ontología
-        #arreglar lo que retorna un doc (solo son id y terms)
-        short_doc = {
-            "uuid": None,
-            "distance": None
-        }
+        doc_list = []
         for doc in self.__matrix.docs:           
-            distance_euc = self.__metrics.euclid_vectors(
+            distance_euc = self.__metrics.cos_vectors(
                 doc['terms'], 
                 query_vector
-            ) 
-            if short_doc["uuid"] == None:
-                short_doc["uuid"] = doc['uuid']
-                short_doc["distance"] = distance_euc 
-            else:
-                if short_doc["distance"] > distance_euc:
-                    short_doc["uuid"] = doc['uuid']
-                    short_doc["distance"] = distance_euc
+            )
+
+            doc_data = {
+                "uuid": doc['id'],
+                "distance": distance_euc
+            }
+
+            doc_list.append(doc_data)
             
-        return short_doc["uuid"]
+        return sorted(doc_list, key=lambda k:k['distance'], reverse=True)

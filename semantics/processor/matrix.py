@@ -116,7 +116,7 @@ class Matrix:
         dump_db = TinyDB(
             "semantics/" +
             name + "/" + 
-            name + ".json"
+            name + "_index.json"
         )
         dump_db.purge_tables()
         dump_db.purge()
@@ -140,7 +140,7 @@ class Matrix:
         dump_db = TinyDB(
             "semantics/" +
             name + "/" + 
-            name + ".json"
+            name + "_index.json"
         )
 
         terms_table = dump_db.table("terms")
