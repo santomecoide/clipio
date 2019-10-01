@@ -1,5 +1,6 @@
 import os
-from threading import Thread
+import ctypes
+import threading
 
 from tinydb import TinyDB
 
@@ -10,66 +11,83 @@ from comparator_less_or_equal import LessOrEqual
 from comparator_equal import Equal
 from comparator_not_equal import NotEqual
 
-eca_taken = [0]
+""" hacer un modelo de eca """
 
-def greater(eca_id):
-    gt = Greater(eca_id)
-    gt.set_listener()
+class ECA(threading.Thread):
 
-def less(eca_id):
-    ls = Less(eca_id)
-    ls.set_listener()
+    def __init__(self):
+        threading.Thread.__init__(self)
+        self.__eca_id_running = []
 
-def greater_or_equal(eca_id):
-    gteq = GreaterOrEqual(eca_id)
-    gteq.set_listener()
+    def __get_id(self): 
+        for id, thread in threading._active.items(): 
+            if thread is self: 
+                return id
 
-def less_or_equal(eca_id):
-    lseq = LessOrEqual(eca_id)
-    lseq.set_listener()
+    def __greater(self, eca_id):
+        gt = Greater(eca_id)
+        gt.set_listener()
 
-def equal(eca_id):
-    eq = Equal(eca_id)
-    eq.set_listener()
+    def __less(self, eca_id):
+        ls = Less(eca_id)
+        ls.set_listener()
 
-def not_equal(eca_id):
-    neq = NotEqual(eca_id)
-    neq.set_listener()
+    def __greater_or_equal(self, eca_id):
+        gteq = GreaterOrEqual(eca_id)
+        gteq.set_listener()
 
-def holder(eca):
-    print(eca["name"] + " inicio")
+    def __less_or_equal(self, eca_id):
+        lseq = LessOrEqual(eca_id)
+        lseq.set_listener()
 
-    base = eca["actions"][eca["name"]]
-    condition = base["input"]["properties"]["condition"]
-    
-    switcher = {
-        ">": greater,
-        "<": less,
-        ">=": greater_or_equal,
-        "<=": less_or_equal,
-        "==": equal,
-        "!=": not_equal,
-    }
-    function = switcher.get(
-        condition["properties"]["operator"]["const"], 
-        lambda:"Invalid"
-    )
-    function(eca["id"])
+    def __equal(self, eca_id):
+        eq = Equal(eca_id)
+        eq.set_listener()
 
-    print(eca["name"] + " fin")
-    
-def main():
-    while True:
-        eca_db = TinyDB("ecadb.json")
-        eca_db.all()
+    def __not_equal(self, eca_id):
+        neq = NotEqual(eca_id)
+        neq.set_listener()
+
+    def __handler(self, eca):
+        base = eca["actions"][eca["name"]]
+        condition = base["input"]["properties"]["condition"]
         
-        for eca in eca_db.all():
-            if eca["id"] not in eca_taken:
-                holder_thread = Thread(target=holder, args=(eca, ))
-                holder_thread.start()
-                eca_taken.append(eca["id"])
-        
-        eca_db.close()
+        switcher = {
+            ">": self.__greater,
+            "<": self.__less,
+            ">=": self.__greater_or_equal,
+            "<=": self.__less_or_equal,
+            "==": self.__equal,
+            "!=": self.__not_equal,
+        }
+        function = switcher.get(
+            condition["properties"]["operator"]["const"], 
+            lambda:"Invalid"
+        )
+        function(eca["id"])
 
-if __name__ == "__main__":
-    main()
+    def run(self):
+        try:
+            while True:
+                eca_db = TinyDB("ecadb.json")
+                for eca in eca_db.all():
+                    if eca["id"] not in self.__eca_id_running:
+                        handler_thread = threading.Thread(
+                            target=self.__handler, 
+                            args=(eca, )
+                        )
+                        handler_thread.start()
+                        self.__eca_id_running.append(eca["id"])
+                eca_db.close()
+        finally:
+            self.__eca_id_running = []
+
+    def stop(self):
+        self.__eca_id_running.append(self.__get_id())
+        for thread_id in self.__eca_id_running:
+            res = ctypes.pythonapi.PyThreadState_SetAsyncExc(
+                thread_id, 
+                ctypes.py_object(SystemExit)
+            ) 
+            if res > 1: 
+                ctypes.pythonapi.PyThreadState_SetAsyncExc(thread_id, 0)

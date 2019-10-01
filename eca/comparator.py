@@ -66,7 +66,6 @@ class Comparator(ABC):
             time.sleep(60)
 
     def __on_message(self, client, userdata, msg):
-        print(msg.payload)
         switcher = {
             "string": self.string_switch,
             "number": self.number_switch,
@@ -133,8 +132,6 @@ class Comparator(ABC):
         server = (netloc.split(":")[0], int(port))
         coap_client = HelperClient(server)
         coap_client.put(path, str(const))
-
-        print("triggered")
         
         self.__triggered = True
 

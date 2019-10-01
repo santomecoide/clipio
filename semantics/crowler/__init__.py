@@ -1,2 +1,1 @@
-from .crowler import Crowler
-import spider
+from .crowler import *

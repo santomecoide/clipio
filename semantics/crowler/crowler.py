@@ -2,7 +2,7 @@ import time
 import ctypes
 import threading
 
-import spider
+from spider import Spider
 
 class Crowler(threading.Thread):
     def __init__(self): 
