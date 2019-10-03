@@ -4,16 +4,16 @@ import threading
 
 from tinydb import TinyDB
 
-from comparator_greater import Greater 
-from comparator_less import Less
-from comparator_grater_or_equal import GreaterOrEqual
-from comparator_less_or_equal import LessOrEqual
-from comparator_equal import Equal
-from comparator_not_equal import NotEqual
+from eca.greater import Greater 
+from eca.less import Less
+from eca.grater_or_equal import GreaterOrEqual
+from eca.less_or_equal import LessOrEqual
+from eca.equal import Equal
+from eca.not_equal import NotEqual
 
 """ hacer un modelo de eca """
 
-class ECA(threading.Thread):
+class Eca(threading.Thread):
 
     def __init__(self):
         threading.Thread.__init__(self)

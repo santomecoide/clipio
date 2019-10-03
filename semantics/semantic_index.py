@@ -25,7 +25,6 @@ class SemanticIndex:
                     FILTER (lang(?label) = 'es')
             }
         """
-        
         graph = rdflib.Graph()
         graph.load(
             "semantics/" +

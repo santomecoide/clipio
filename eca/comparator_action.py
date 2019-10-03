@@ -7,7 +7,7 @@ from paho.mqtt import client as mqtt
 from coapthon.client.helperclient import HelperClient
 from tinydb import TinyDB, Query
 
-class Comparator(ABC):
+class ComparatorAction(ABC):
     def __init__(self, eca_id):
         eca_db = TinyDB("ecadb.json")
         eca = eca_db.search(Query().id == eca_id)[0]
