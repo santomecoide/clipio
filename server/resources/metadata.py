@@ -1,10 +1,10 @@
 import json
 from coapthon.resources.resource import Resource
 
-class GetMetadata(Resource):
-    def __init__(self, name="get_metadata"):
-        super(GetMetadata, self).__init__(name)
-        self.payload = "Get Metadata Resource"
+class Metadata(Resource):
+    def __init__(self, name="metadata"):
+        super(Metadata, self).__init__(name)
+        self.payload = "Metadata Resource"
 
     def render_GET(self, request):
         with open('metadata.json') as myfile:

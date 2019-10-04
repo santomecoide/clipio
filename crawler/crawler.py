@@ -2,9 +2,9 @@ import time
 import ctypes
 import threading
 
-from crowler.spider import Spider
+from crawler.spider import Spider
 
-class Crowler(threading.Thread):
+class Crawler(threading.Thread):
     def __init__(self): 
         threading.Thread.__init__(self) 
         self.__url_crawling_yet = []

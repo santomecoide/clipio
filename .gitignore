@@ -107,6 +107,9 @@ venv.bak/
 # mypy
 .mypy_cache/
 
-#database
+# database
 ecadb.json
 metadata.json
+
+# ide
+.vscode/settings.json

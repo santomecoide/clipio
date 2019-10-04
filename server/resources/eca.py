@@ -4,11 +4,29 @@ import ast
 from tinydb import TinyDB, Query
 from coapthon.resources.resource import Resource
 
-class CreateEca(Resource):
-    def __init__(self, name="create_eca"):
-        super(CreateEca, self).__init__(name)
-        self.payload = "Create Eca Resource"
+class Eca(Resource):
+    def __init__(self, name="eca"):
+        super(Eca, self).__init__(name)
+        self.payload = "Eca Resource"
 
+    def __update_state(self, state):
+        def transform(doc):
+            doc["properties"]["state"]["const"] = state
+            doc["modified"] = str(datetime.now())
+        return transform
+
+    def render_PUT(self, request):
+        eca_db = TinyDB("ecadb.json")
+        
+        data = ast.literal_eval(request.payload)
+        eca_db.update(
+            self.__update_state(data["state"]), 
+            Query().id == data["id"]
+        )
+        
+        eca_db.close()
+        return self
+    
     def render_POST(self, request):
         eca_db = TinyDB("ecadb.json")
         data = ast.literal_eval(request.payload)
