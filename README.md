@@ -7,3 +7,5 @@ semantic interoperability iot framework
 * paho (Version 1) -> https://pypi.org/project/paho-mqtt -> pip install paho-mqtt
 * tinydb (Version 3) -> https://tinydb.readthedocs.io/en/latest/intro.html -> pip install tinydb
 * rdflib (Version 4) -> https://github.com/RDFLib/rdflib -> pip install rdflib
+* nltk (Version 3) -> https://www.nltk.org -> pip install nltk
+* nltk_data -> https://www.nltk.org/data -> python nltk_data_install.py
