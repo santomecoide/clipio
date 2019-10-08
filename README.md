@@ -8,4 +8,10 @@ semantic interoperability iot framework
 * tinydb (Version 3) -> https://tinydb.readthedocs.io/en/latest/intro.html -> pip install tinydb
 * rdflib (Version 4) -> https://github.com/RDFLib/rdflib -> pip install rdflib
 * nltk (Version 3) -> https://www.nltk.org -> pip install nltk
-* nltk_data -> https://www.nltk.org/data -> python nltk_data_install.py
+
+* nltk_data -> https://www.nltk.org/data -> in python script run:
+* import nltk
+* nltk.download('punkt')
+* nltk.download('stopwords')
+* nltk.download('wordnet')
+* nltk.download('omw')

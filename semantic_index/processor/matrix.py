@@ -1,6 +1,6 @@
 import sys, math, random
 from tinydb import TinyDB, Query
-from semantics.processor.superlist import SuperList
+from semantic_index.processor.superlist import SuperList
 
 class MatrixDocs(list):
 
