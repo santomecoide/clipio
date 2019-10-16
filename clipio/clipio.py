@@ -18,6 +18,10 @@ def gen_metadata(path):
         data = json.load(metadata_file)
         print(data["name"])
 
+def gen_coap_server(path):
+    path = fixPath(path)
+
+#quitar src que esto no es de python
 def gen_user_coap_server(path, name):
     path = fixPath(path)
     domain = socket.gethostbyname(socket.gethostname())
@@ -66,21 +70,23 @@ def gen_project(name, path):
     gen_user_metadata(path, name)
     gen_user_coap_server(path, name)
 
-try:
-    command = sys.argv[1]
-    
-    if command == "new":
-        gen_project(sys.argv[2], sys.argv[3])
-    
-    if command == "generate":
-        file_name = sys.argv[2]
-        if file_name == "metadata":
-            gen_metadata(sys.argv[3])
+if __name__ == "__main__":
+    try:
+        command = sys.argv[1]
+        if command == "new":
+            gen_project(sys.argv[2], sys.argv[3])
+        if command == "generate":
+            file_name = sys.argv[2]
+            if file_name == "metadata":
+                gen_metadata(sys.argv[3])
+            if file_name == "coap":
+                gen_coap_server(sys.argv[3])
+        if command == "help":
+            print_help()
 
-    if command == "help":
+    except IndexError:
         print_help()
 
-except IndexError:
-    print_help()
+
 
         
