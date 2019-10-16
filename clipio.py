@@ -1,6 +1,7 @@
 import sys
 import os
 import json
+import socket
 
 def print_help():
     print("type:")
@@ -17,6 +18,18 @@ def gen_metadata(path):
         data = json.load(metadata_file)
         print(data["name"])
 
+def gen_user_coap_server(path, name):
+    path = fixPath(path)
+    domain = socket.gethostbyname(socket.gethostname())
+    port = "5683"
+
+    metadata_file = open(path + 'src/coap_server.json',"w+")
+    metadata_file.write('{\n')
+    metadata_file.write('\t"domain": "' + domain + '",\n')
+    metadata_file.write('\t"port": "' + port + '"\n')
+    metadata_file.write('}\n')
+    metadata_file.close()
+
 def gen_user_metadata(path, name):
     path = fixPath(path)
     
@@ -27,11 +40,15 @@ def gen_user_metadata(path, name):
     metadata_file.write('\t"resources": [\n')
     metadata_file.write('\t\t{\n')
     metadata_file.write('\t\t\t"name": "",\n')
-    metadata_file.write('\t\t\t"description": ""\n')
+    metadata_file.write('\t\t\t"description": "",\n')
+    metadata_file.write('\t\t\t"type": "",\n')
+    metadata_file.write('\t\t\t"unit": ""\n')
     metadata_file.write('\t\t},\n')
     metadata_file.write('\t\t{\n')
     metadata_file.write('\t\t\t"name": "",\n')
-    metadata_file.write('\t\t\t"description": ""\n')
+    metadata_file.write('\t\t\t"description": "",\n')
+    metadata_file.write('\t\t\t"type": "",\n')
+    metadata_file.write('\t\t\t"unit": ""\n')
     metadata_file.write('\t\t}\n')
     metadata_file.write('\t]\n')
     metadata_file.write('}\n')
@@ -47,6 +64,7 @@ def gen_project(name, path):
     except FileExistsError: pass
 
     gen_user_metadata(path, name)
+    gen_user_coap_server(path, name)
 
 try:
     command = sys.argv[1]
