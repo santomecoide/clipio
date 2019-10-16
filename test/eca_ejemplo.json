@@ -1,0 +1,63 @@
+{
+    "id": 0,
+    "name": "name",
+    "description": "description",
+    "created" : "2018-11-14T19:10:23.824Z",
+    "modified" : "2019-06-01T09:12:43.124Z",
+    "properties": {
+        "state": {
+            "type": "boolean",
+            "const": 0
+        }
+    },
+    "actions": {
+        "name": {
+            "input": {
+                "type": "object",
+                "properties": {
+                    "event": {
+                        "type": "number",
+                        "unit": "°C",
+                        "forms": [
+                            {
+                                "op": "readproperty",
+                                "protocol": "mqtt",
+                                "href": "mqtt://domain:port/topoic"
+                            },
+                            {
+                                "op": "readproperty",
+                                "protocol": "coap",
+                                "href": "coap://domain:port/lightSensor",
+                                "methodName": "GET"
+                            }
+                        ]
+                    },
+                    "condition": {
+                        "type": "object",
+                        "properties": {
+                            "operator": {
+                                "type": "string",
+                                "const": ">"
+                            },
+                            "value": {
+                                "const": 10
+                            }
+                        }
+                    }
+                }
+            },
+            "output": {
+                "type": "boolean",
+                "const": 1,
+                "forms": [
+                    {
+                        "op": "writeproperty",
+                        "protocol": "coap",
+                        "href": "coap://domain:port/lightSensor",
+                        "methodName": "PUT"
+                    }
+                ]
+            }
+        }
+    }
+}
