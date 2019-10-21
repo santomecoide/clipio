@@ -19,20 +19,20 @@ class ProjectManagementUtility:
         settings_file = open(path + '/settings.py',"w+")
         
         settings_file.write('NAME = "' + self.__name + '"\n')
-
         settings_file.write('\n')
-        
         settings_file.write('METADATA = {\n')
         settings_file.write('\t"name": "' + self.__name + '",\n')
         settings_file.write('\t"description": "",\n')
         settings_file.write('\t"resources": [\n')
         settings_file.write('\t\t{\n')
+        settings_file.write('\t\t\t"tag": "",\n')
         settings_file.write('\t\t\t"name": "",\n')
         settings_file.write('\t\t\t"description": "",\n')
         settings_file.write('\t\t\t"type": "",\n')
         settings_file.write('\t\t\t"unit": ""\n')
         settings_file.write('\t\t},\n')
         settings_file.write('\t\t{\n')
+        settings_file.write('\t\t\t"tag": "",\n')
         settings_file.write('\t\t\t"name": "",\n')
         settings_file.write('\t\t\t"description": "",\n')
         settings_file.write('\t\t\t"type": "",\n')
@@ -40,9 +40,7 @@ class ProjectManagementUtility:
         settings_file.write('\t\t}\n')
         settings_file.write('\t]\n')
         settings_file.write('}\n')
-
         settings_file.write('\n')
-
         settings_file.write('COAP_SERVER = {\n')
         settings_file.write('\t"domain": "' + domain + '",\n')
         settings_file.write('\t"port": "' + port + '"\n')
@@ -63,14 +61,22 @@ class ProjectManagementUtility:
         manager_file.write('\ttry:\n')
         manager_file.write('\t\tcom = sys.argv[1]\n')
         manager_file.write('\t\tif com == "generate" or com == "g":\n')
-        manager_file.write('\t\t\tmetadata_mu = MetadataManagementUtility(settings.METADATA)\n')
-        manager_file.write('\t\t\tmetadata_mu.generate_metadata()\n')
+        manager_file.write('\t\t\tmetadata_mu = MetadataManagementUtility(settings.METADATA, settings.COAP_SERVER)\n')
+        manager_file.write('\t\t\tif metadata_mu.is_data_valid():\n')
+        manager_file.write('\t\t\t\tmetadata_mu.generate_metadata()\n')
         manager_file.write('\t\tif com == "help" or com == "h":\n')
         manager_file.write('\t\t\thelp_mu.help()\n')
         manager_file.write('\texcept IndexError:\n')
         manager_file.write('\t\thelp_mu.help()\n')
 
         manager_file.close()
+
+    def __gen_coap_server(self, path):
+        server_file = open(path + '/server.py',"w+")
+                
+        with open('metadata.json') as myfile:
+
+        server_file.close()
     
     def generate_project(self):
         try: os.mkdir(self.__path + self.__name)
@@ -81,3 +87,4 @@ class ProjectManagementUtility:
 
         self.__gen_settings(self.__path + self.__name)
         self.__gen_manager(self.__path + self.__name)
+        self.__gen_coap_server(self.__path + self.__name)

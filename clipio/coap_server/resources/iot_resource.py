@@ -1,11 +1,15 @@
+from abc import abstractmethod
 from coapthon.resources.resource import Resource
 
 class IotResource(Resource):
-    def __init__(self, name): 
+    def __init__(self, name):
         super(IotResource, self).__init__(name)
 
+    @abstractmethod
     def render_GET(self, request):
-        return self
+        pass
 
+    @abstractmethod
     def render_PUT(self, request):
-        return self
+        pass
+    

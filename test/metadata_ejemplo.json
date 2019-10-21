@@ -1,0 +1,84 @@
+{
+    "id": "708637323",
+    "name": "Regulador de temperatura",
+    "description": "Regulador de temperatura conectado a la web",
+    "created": "2018-11-14T19:10:23.824Z",
+    "modified": "2019-06-01T09:12:43.124Z",
+    "properties": {
+        "temperature": {
+            "name": "Sensor de temperatura",
+            "description": "Medida de temperatura de la estación",
+            "type": "number",
+            "unit": "°C",
+            "forms": [
+                {
+                    "op": "readproperty",
+                    "protocol": "mqtt",
+                    "href": "mqtt://domain:port/project_name/topoic"
+                },
+                {
+                    "op": "readproperty",
+                    "protocol": "coap",
+                    "href": "coap://domain:port/project_name/lightSensor",
+                    "methodName": "GET"
+                },
+                {
+                    "op": "writeproperty",
+                    "protocol": "coap",
+                    "href": "coap://domain:port/project_name/lightSensor",
+                    "methodName": "PUT"
+                }
+            ]
+        },
+        "heater": {
+            "name": "Calentador",
+            "description": "Calentar el medio ambiente",
+            "type": "boolean",
+            "unit": "",
+            "forms": [
+                {
+                    "op": "readproperty",
+                    "protocol": "mqtt",
+                    "href": "mqtt://domain:port/project_name/topoic"
+                },
+                {
+                    "op": "readproperty",
+                    "protocol": "coap",
+                    "href": "coap://domain:port/project_name/lightSensor",
+                    "methodName": "GET"
+                },
+                {
+                    "op": "writeproperty",
+                    "protocol": "coap",
+                    "href": "coap://domain:port/project_name/lightSensor",
+                    "methodName": "PUT"
+                }
+            ]
+        },
+        "fan": {
+            "name": "Ventilador",
+            "description": "Eenfriar el medio ambiente",
+            "type": "boolean",
+            "unit": "",
+            "forms": [
+                {
+                    "op": "readproperty",
+                    "protocol": "mqtt",
+                    "href": "mqtt://domain:port/project_name/topoic"
+                },
+                {
+                    "op": "readproperty",
+                    "protocol": "coap",
+                    "href": "coap://domain:port/project_name/lightSensor",
+                    "methodName": "GET"
+                },
+                {
+                    "op": "writeproperty",
+                    "protocol": "coap",
+                    "href": "coap://domain:port/project_name/lightSensor",
+                    "methodName": "PUT"
+                }
+            ]
+        }
+    }
+}

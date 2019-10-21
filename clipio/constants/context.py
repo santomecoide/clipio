@@ -1,3 +1,0 @@
-ontology = {
-    "home": "dogont"
-}
