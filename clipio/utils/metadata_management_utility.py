@@ -12,7 +12,7 @@ class MetadataManagementUtility:
         self.__fix_tags()
 
     def __fix_tags(self):
-         for resource in self.__metadata['resources']: 
+        for resource in self.__metadata['resources']: 
             resource['tag'] = resource['tag'].lower()
 
     def __fix_metadata(self):        
@@ -24,6 +24,9 @@ class MetadataManagementUtility:
                         self.__metadata[key][index][key2] = value2.strip() 
             else:
                 self.__metadata[key] = value.strip()
+
+    def get_fix_metadata(self):
+        return self.__metadata
 
     def is_data_valid(self):
         error_log = []
@@ -37,7 +40,8 @@ class MetadataManagementUtility:
             if ' ' in resource['tag']:
                 error_log.append("metadata.resource.tag can not have whitespace. You give: %s" % (resource['tag']))
 
-            if resource['type'] not in CON.ACCEPTED_TYPES:
+            only_types = [ sub['name'] for sub in CON.ACCEPTED_TYPES ]
+            if resource['type'] not in only_types:
                 error_log.append("metadata.resource.type not found. You give: %s" % (resource['type']))
             
         only_tags = [ sub['tag'] for sub in self.__metadata['resources'] ]

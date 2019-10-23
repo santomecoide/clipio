@@ -73,9 +73,6 @@ class ProjectManagementUtility:
 
     def __gen_coap_server(self, path):
         server_file = open(path + '/server.py',"w+")
-                
-        with open('metadata.json') as myfile:
-
         server_file.close()
     
     def generate_project(self):

@@ -1,8 +1,8 @@
 from coapthon.server.coap import CoAP
 
-from server.resources.metadata import Metadata
-from server.resources.eca import Eca
-from server.resources.context import Context
+from clipio.coap_server.resources.metadata import Metadata
+from clipio.coap_server.resources.eca import Eca
+from clipio.coap_server.resources.context import Context
 
 class Server(CoAP):
     def __init__(self, host, port=5683):
@@ -11,15 +11,15 @@ class Server(CoAP):
         self.add_resource('eca', Eca())
         self.add_resource('context', Context())
 
-    def __add_iot_resources(self, iot_list=[]):
-        for iot_class, iot_resource in iot_list:
+    def __add_iot_resources(self, resources):
+        for obj, name in resources:
             self.add_resource(
-                iot_resource, 
-                iot_class
+                name, 
+                obj
             )
             
-    def run(self):
-        self.__add_iot_resources()
+    def run(self, resources):
+        self.__add_iot_resources(resources)
         self.listen()
 
     def stop(self):
