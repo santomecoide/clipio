@@ -2,8 +2,8 @@
 
 import sys
 
-from utils.project_management_utility import ProjectManagementUtility
-from utils.help_management_utility import HelpManagementUtility
+from utils.management.project_management_utility import ProjectManagementUtility
+from utils.management.help_management_utility import HelpManagementUtility
 
 if __name__ == "__main__":
     help_mu = HelpManagementUtility

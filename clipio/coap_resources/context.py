@@ -1,5 +1,5 @@
 from coapthon.resources.resource import Resource
-from semantic_index import SemanticIndex
+from clipio.semantic_index import SemanticIndex
 
 class Context(Resource):
     def __init__(self, name="context"):

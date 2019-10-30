@@ -1,0 +1,27 @@
+NAME = "{name}"
+
+METADATA = {
+	"name": "{name}",
+	"description": "",
+	"resources": [
+		{
+			"tag": "",
+			"name": "",
+			"description": "",
+			"type": "",
+			"unit": ""
+		},
+		{
+			"tag": "",
+			"name": "",
+			"description": "",
+			"type": "",
+			"unit": ""
+		}
+	]
+}
+
+COAP_SERVER = {
+	"domain": "{domain}",
+	"port": "{port}"
+}

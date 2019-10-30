@@ -1,5 +1,0 @@
-from clipio.coap_server.resources.iot_resource import IotResource
-\n
-class %s0(IotResource):
-    \tdef __init__(self, type): 
-        \tsuper().__init__("%s1", "%s2")

@@ -7,7 +7,7 @@ class Metadata(Resource):
         self.payload = "Metadata Resource"
 
     def render_GET(self, request):
-        with open('metadata.json') as myfile:
-            data = json.load(myfile)
+        with open('metadata.json') as fp:
+            data = json.load(fp)
             self.payload = str(data)
             return self

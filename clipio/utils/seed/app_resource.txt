@@ -1,0 +1,6 @@
+# file for {} iot resource
+# use ValueHelper for share your iot resources with clipio network
+# if you need push and pull data use ValueHelper -> value
+
+from clipio.utils.value_helper import ValueHelper
+{}_vh_obj = ValueHelper('{}', '{}')

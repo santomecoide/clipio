@@ -9,7 +9,9 @@ class CoAPServer(CoAP):
 def main():
     server = CoAPServer("0.0.0.0", 5683)
     try:
+        print("antes del server")
         server.listen(10)
+        print("despues del server")
     except KeyboardInterrupt:
         print("Server Shutdown")
         server.close()

@@ -1,19 +1,13 @@
 import uuid 
 import json
-from datetime import datetime
 import clipio.constants as CON 
+from datetime import datetime
+from clipio.utils.log import ErrorLog, InfoLog
 
 class MetadataManagementUtility:
     def __init__(self, metadata, coap_server):
         self.__metadata = metadata
         self.__coap_server = coap_server
-
-        self.__fix_metadata()
-        self.__fix_tags()
-
-    def __fix_tags(self):
-        for resource in self.__metadata['resources']: 
-            resource['tag'] = resource['tag'].lower()
 
     def __fix_metadata(self):        
         for key, value in self.__metadata.items(): 
@@ -25,43 +19,52 @@ class MetadataManagementUtility:
             else:
                 self.__metadata[key] = value.strip()
 
-    def get_fix_metadata(self):
-        return self.__metadata
+    def tags(self):
+        tags = []
+        for resource in self.__metadata['resources']:
+            tags.append(resource['tag'])
 
     def is_data_valid(self):
-        error_log = []
+        error = False
         
         if not self.__metadata['name'].strip():
-            error_log.append("metadata.name can not be empty")
-
+            ErrorLog.show("metadata.name can not be empty")
+            error = True
         for resource in self.__metadata['resources']:
             if not resource['tag'].strip():
-                error_log.append("metadata.resource.tag can not be empty")
+                ErrorLog.show("metadata.resource.tag can not be empty")
+                error = True
             if ' ' in resource['tag']:
-                error_log.append("metadata.resource.tag can not have whitespace. You give: %s" % (resource['tag']))
+                ErrorLog.show("metadata.resource.tag can not have whitespace. You give: %s" % (resource['tag']))
+                error = True
+
+            if not resource['tag'].islower():
+                ErrorLog.show("metadata.resource.tag can not have uppercase letters. You give: %s" % (resource['tag']))
+                error = True
 
             only_types = [ sub['name'] for sub in CON.ACCEPTED_TYPES ]
             if resource['type'] not in only_types:
-                error_log.append("metadata.resource.type not found. You give: %s" % (resource['type']))
+                ErrorLog.show("metadata.resource.type not found. You give: %s" % (resource['type']))
+                error = True
             
         only_tags = [ sub['tag'] for sub in self.__metadata['resources'] ]
         for tag in only_tags:
             if only_tags.count(tag) > 1:
-                error_log.append("metadata.resource.tag can not be repeated. You give: %s" % (tag))
+                ErrorLog.show("metadata.resource.tag can not be repeated. You give: %s" % (tag))
+                error = True
 
         if not self.__coap_server['domain'].strip():
-            error_log.append("coap_server.domain can not be empty")
+            ErrorLog.show("coap_server.domain can not be empty")
+            error = True
         if not self.__coap_server['port'].strip():
-            error_log.append("coap_server.port can not be empty")
+            ErrorLog.show("coap_server.port can not be empty")
+            error = True
 
-        if len(error_log) > 0:
-            print("Error!")
-            for error in error_log:
-                print(error)
-            return False
-        return True  
+        return not error  
             
     def generate_metadata(self):
+        self.__fix_metadata()
+        
         name = self.__metadata['name']
         domain = self.__coap_server["domain"]
         port = self.__coap_server["port"]
@@ -105,5 +108,7 @@ class MetadataManagementUtility:
             "properties": properties
         } 
 
-        with open('metadata.json', 'w') as fp:
+        with open('generated/metadata.json', 'w') as fp:
             json.dump(metadata, fp)
+
+        InfoLog.show("metadata generated")
