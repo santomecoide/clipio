@@ -7,11 +7,21 @@ from clipio.utils.management.server_management_utility import ServerManagementUt
 from clipio.utils.management.app_management_utility import AppManagementUtility
 from clipio.utils.management.help_management_utility import HelpManagementUtility
 
+def mu_handler(mus = []):
+	for mu in mus:
+		mu.run()
+	try:
+		while True: pass
+	except KeyboardInterrupt:
+		for mu in mus:
+			mu.stop()
+
 if __name__ == "__main__":
 	help_mu = HelpManagementUtility
 	try:
 		com = sys.argv[1]
 		metadata_mu = MetadataManagementUtility(settings.METADATA, settings.COAP_SERVER)
+		
 		if com == "generate" or com == "g":
 			iot_resource_mu = IoTResourceManagementUtility(settings.METADATA)
 			app_mu = AppManagementUtility(settings.METADATA)
@@ -19,13 +29,17 @@ if __name__ == "__main__":
 				metadata_mu.generate_metadata()
 				iot_resource_mu.generate_resources()
 				app_mu.generate_files()
+		
 		if com == "server":
 			server_mu = ServerManagementUtility(settings.COAP_SERVER)
 			if metadata_mu.is_data_valid():
 				for tag in metadata_mu.tags():
 					server_mu.add_iot_resource(tag) 
-				server_mu.run()
+				
+				mu_handler([server_mu])				
+		
 		if com == "help" or com == "h":
 			help_mu.help()
+	
 	except IndexError:
 		help_mu.help()

@@ -6,8 +6,12 @@ class Metadata(Resource):
         super(Metadata, self).__init__(name)
         self.payload = "Metadata Resource"
 
+    def __fix(self, data):
+        fix_data = data.replace("'", '"')
+        return fix_data
+
     def render_GET(self, request):
-        with open('metadata.json') as fp:
+        with open('generated/metadata.json') as fp:
             data = json.load(fp)
-            self.payload = str(data)
+            self.payload = self.__fix(str(data))
             return self

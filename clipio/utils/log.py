@@ -1,3 +1,4 @@
+#cambiar a logger
 class ErrorLog:
     def __init__(self):
         pass

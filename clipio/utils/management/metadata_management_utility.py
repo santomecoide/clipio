@@ -23,6 +23,7 @@ class MetadataManagementUtility:
         tags = []
         for resource in self.__metadata['resources']:
             tags.append(resource['tag'])
+        return tags
 
     def is_data_valid(self):
         error = False
@@ -56,7 +57,7 @@ class MetadataManagementUtility:
         if not self.__coap_server['domain'].strip():
             ErrorLog.show("coap_server.domain can not be empty")
             error = True
-        if not self.__coap_server['port'].strip():
+        if not self.__coap_server['port']:
             ErrorLog.show("coap_server.port can not be empty")
             error = True
 
@@ -67,7 +68,7 @@ class MetadataManagementUtility:
         
         name = self.__metadata['name']
         domain = self.__coap_server["domain"]
-        port = self.__coap_server["port"]
+        port = str(self.__coap_server["port"])
         
         properties = {}
         for resource in self.__metadata['resources']:

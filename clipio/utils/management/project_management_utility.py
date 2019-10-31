@@ -50,5 +50,8 @@ class ProjectManagementUtility:
         try: os.mkdir(self.__path + self.__name + "/app")
         except FileExistsError: pass
 
+        try: os.mkdir(self.__path + self.__name + "/store")
+        except FileExistsError: pass
+
         self.__gen_settings(self.__path + self.__name)
         self.__gen_manager(self.__path + self.__name)

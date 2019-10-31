@@ -54,19 +54,19 @@ class ValueHelper:
             return value
 
     @value.setter
-    def value(self, input_value):
-        if not input_value: 
-            input_value = self.__default()
-        
-        if type(input_value) != self.__py_type():
-            input_value = self.__default()
-            #poner ("incorrect value type")
-        else:
+    def value(self, input_value):        
+        try:
+            typed_value = self.__py_type()(input_value)
+            
             while self.__busy(): pass
             self.__set_busy()
             
             with open('generated/'+ self.__tag +'.json', 'w') as fp:
-                json.dump({"value": input_value}, fp)
+                json.dump({"value": typed_value}, fp)
 
             self.__unset_busy()
+        except ValueError:
+            print("incorrect value type")
+            #poner ("incorrect value type")
+            
             

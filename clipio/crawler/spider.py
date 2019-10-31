@@ -3,17 +3,13 @@ import ast
 from urllib.parse import urlparse
 
 from coapthon.client.helperclient import HelperClient
-
-metadata_key_words = ["name", "description", "title"]
-url_key_words = ["href", "link"]
+from clipio import constants as CON
 
 class Spider(object):
     def __init__(self, target_url):
         self.__to_visit = []
         self.__visted = []
-        
         self.__target_url = target_url
-        self.metadata = ""
 
     def __clean(self, url):
         idx = url.find('#')
@@ -38,54 +34,63 @@ class Spider(object):
                     for result in self.__find_key(key, d):
                         yield result   
 
-    def __parser(self, url):   
-        urls = []
-        metadata = []
+    def __request(self, url):
         url_components = urlparse(url)
         
         if str(url_components.scheme) == "coap":
             port = url_components.port
             if url_components.port is None:
-                port = 5683
+                port = CON.COAP_PORT
 
-            server = (url_components.netloc, port)
+            server = (url_components.netloc.split(':')[0], port)
             client = HelperClient(server)
-            response = client.get(url_components.path)
+            response = client.get(url_components.path[1:])
             
             try:
-                data_dict = (response.payload)
+                data_dict = json.loads(response.payload)
             except:
-                data_dict = json.loads("{}")
-
-            for word in metadata_key_words:
-                metadata_result = self.__find_key(word, data_dict)
-                metadata_result_list = list(metadata_result)
-                metadata += metadata_result_list
-
-            for word in url_key_words:
-                url_result = self.__find_key(word, data_dict)
-                url_result_list = list(url_result)
-                urls += url_result_list
-                
+                data_dict = None
+            
         if str(url_components.scheme) == "http":
-            pass
+            data_dict = None
 
-        return metadata, urls
+        return data_dict
+    
+    def __parser(self, data_dict):   
+        urls = []
+        metadata_corpus = ''
 
-    def get_metadata(self):
+        for word in CON.METADATA_KEY_WORDS:
+            metadata_result = self.__find_key(word, data_dict)
+            for metadata_dot in list(metadata_result):
+                metadata_corpus += ' ' + metadata_dot
+
+        for word in CON.URL_KEY_WORDS:
+            url_result = self.__find_key(word, data_dict)
+            url_result_list = list(url_result)
+            urls += url_result_list
+
+        return metadata_corpus, urls        
+
+    def metadata_corpus(self):
         clean_url = self.__clean(self.__target_url)
         self.__to_visit.append(clean_url)   
 
+        corpus = ""
+        metadata_list = []
         while len(self.__to_visit) > 0:
             url = self.__to_visit.pop(0)
-            metadata, urls = self.__parser(url)
-            self.__visted.append(url)
+            data = self.__request(url)
             
-            for md in metadata:
-                self.metadata += ' ' + md 
+            if data:
+                metadata_list.append(data)
+                metadata_corpus, urls = self.__parser(url)
+                self.__visted.append(url)
             
-            for url in urls:
-                if url not in self.__visted and url not in self.__to_visit:
-                    self.__to_visit.append(url)
+                corpus += metadata_corpus 
 
-        return self.metadata
+                for url in urls:
+                    if url not in self.__visted and url not in self.__to_visit:
+                        self.__to_visit.append(url)
+
+        return corpus, metadata_list

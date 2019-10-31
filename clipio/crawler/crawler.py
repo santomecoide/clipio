@@ -2,28 +2,54 @@ import time
 import ctypes
 import threading
 
-from crawler.spider import Spider
+from tinydb import TinyDB, Query
+from clipio.crawler.spider import Spider
 
 class Crawler(threading.Thread):
-    def __init__(self): 
+    def __init__(self, crawler_settings): 
         threading.Thread.__init__(self) 
         self.__url_crawling_yet = []
         self.__spider_id_running = []
         
-        #debe ir en constantes globales
-        self.__contex_list = ["dogont"]
-        self.__url_list = ["192.168.0.16"]     
-        self.__crawl_delay_time = 3 #60000     
+        self.__delay_time = crawler_settings['delay_time']  
+        
+        self.__url_list = []
+        for url in crawler_settings['url_list']:
+            self.__url_list.append(self.__complete_url(
+                url, 
+                crawler_settings['protocol'],
+                crawler_settings['path']
+            ))
 
+    def __complete_url(self, url, protocol, path):
+        protocol_full = protocol + "://"
+        path_full = "/" + path 
+        if protocol_full not in url:
+            url = protocol + url
+        if path_full not in url:
+            url = protocol + url
+        return url
+
+    def __store(self, metadata_list):
+        context_db = TinyDB("store/contextdb.json")
+        for metadata in metadata_list:
+            match = context_db.search(Query()["id"] == metadata['id'])
+            if match > 0:
+                context_db.update(metadata, Query()["id"] == metadata['id'])
+            else:
+                context_db.insert(metadata)        
+        context_db.close()
+    
     def __spider(self, url):
         try:
             spider = Spider(url)
-            metadata = spider.get_metadata()
+            corpus, metadata_list = spider.metadata_corpus()
+            self.__store(metadata_list)
             #llamar al inice semantico cargar y guardar documento
         finally: 
             self.__url_crawling_yet.remove(url)
 
-    def __get_id(self): 
+    def __id(self): 
         for id, thread in threading._active.items(): 
             if thread is self: 
                 return id
@@ -40,13 +66,13 @@ class Crawler(threading.Thread):
                         )
                         spider_thread.start()
                         self.__spider_id_running.append(spider_thread._ident)
-                time.sleep(self.__crawl_delay_time)
+                time.sleep(self.__delay_time)
         finally:
             self.__spider_id_running = []
             self.__url_crawling_yet = []
 
     def stop(self): 
-        self.__spider_id_running.append(self.__get_id())
+        self.__spider_id_running.append(self.__id())
         for thread_id in self.__spider_id_running:
             res = ctypes.pythonapi.PyThreadState_SetAsyncExc(
                 thread_id, 
