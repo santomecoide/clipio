@@ -5,38 +5,47 @@ from clipio.utils.management.metadata_management_utility import MetadataManageme
 from clipio.utils.management.iot_resource_management_utility import IoTResourceManagementUtility
 from clipio.utils.management.server_management_utility import ServerManagementUtility
 from clipio.utils.management.app_management_utility import AppManagementUtility
+from clipio.utils.management.settings_management_utility import SettingsManagementUtility
 from clipio.utils.management.help_management_utility import HelpManagementUtility
 
-def mu_handler(mus = []):
-	for mu in mus:
-		mu.run()
+from clipio.crawler.crawler import Crawler
+
+def component_handler(components = []):
+	for component in components:
+		component.run()
 	try:
 		while True: pass
 	except KeyboardInterrupt:
-		for mu in mus:
-			mu.stop()
+		for component in components:
+			component.stop()
 
 if __name__ == "__main__":
 	help_mu = HelpManagementUtility
 	try:
 		com = sys.argv[1]
-		metadata_mu = MetadataManagementUtility(settings.METADATA, settings.COAP_SERVER)
 		
 		if com == "generate" or com == "g":
+			settings_mu = SettingsManagementUtility(settings)
+			metadata_mu = MetadataManagementUtility(settings.METADATA, settings.COAP_SERVER)
 			iot_resource_mu = IoTResourceManagementUtility(settings.METADATA)
 			app_mu = AppManagementUtility(settings.METADATA)
-			if metadata_mu.is_data_valid():
+			
+			if settings_mu.is_data_valid():
 				metadata_mu.generate_metadata()
 				iot_resource_mu.generate_resources()
 				app_mu.generate_files()
 		
 		if com == "server":
+			settings_mu = SettingsManagementUtility(settings)
+			metadata_mu = MetadataManagementUtility(settings.METADATA, settings.COAP_SERVER)
+			crawler = Crawler(settings.CRAWLER)
 			server_mu = ServerManagementUtility(settings.COAP_SERVER)
-			if metadata_mu.is_data_valid():
+			
+			if settings_mu.is_data_valid():
 				for tag in metadata_mu.tags():
 					server_mu.add_iot_resource(tag) 
 				
-				mu_handler([server_mu])				
+				component_handler([crawler, server_mu])				
 		
 		if com == "help" or com == "h":
 			help_mu.help()

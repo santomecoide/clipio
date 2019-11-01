@@ -15,11 +15,9 @@ class Spider(object):
         idx = url.find('#')
         if idx != -1:
             url = url[:idx]
-
         l = len(url)
         if url[l - 1] == '/':
             url = url[:l - 1]
-
         return url 
 
     def __find_key(self, key, dictionary):
@@ -36,21 +34,25 @@ class Spider(object):
 
     def __request(self, url):
         url_components = urlparse(url)
-        
+        data_dict = None
+
         if str(url_components.scheme) == "coap":
             port = url_components.port
             if url_components.port is None:
                 port = CON.COAP_PORT
-
             server = (url_components.netloc.split(':')[0], port)
-            client = HelperClient(server)
-            response = client.get(url_components.path[1:])
             
             try:
+                client = HelperClient(server)
+                response = client.get(url_components.path[1:])
                 data_dict = json.loads(response.payload)
             except:
+                #poner que hay problemas con la url
+                client = HelperClient(("8.8.8.8", 88))
                 data_dict = None
-            
+            finally:
+                client.stop()
+                            
         if str(url_components.scheme) == "http":
             data_dict = None
 
@@ -84,10 +86,10 @@ class Spider(object):
             
             if data:
                 metadata_list.append(data)
-                metadata_corpus, urls = self.__parser(url)
+                _corpus, urls = self.__parser(data)
                 self.__visted.append(url)
             
-                corpus += metadata_corpus 
+                corpus += _corpus 
 
                 for url in urls:
                     if url not in self.__visted and url not in self.__to_visit:

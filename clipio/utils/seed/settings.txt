@@ -26,10 +26,10 @@ COAP_SERVER = {
 	"port": {port}
 }
 
-CRRAWLER = {
+CRAWLER = {
 	"enabled": True,
 	"protocol": "coap",
 	"path": "metadata",
-	"delay_time": 100
+	"delay_time": 100,
 	"url_list": [] 
 }

@@ -5,6 +5,9 @@ ACCEPTED_TYPES = [
     {'name': 'boolean', 'default': 0, 'py_type': int}
 ]
 
+ACCEPTED_PROTOCOLS = ['coap']
+MIN_CRAWLER_DELAY_TIME = 60*60 #1h
+
 ONTOLOGIES = {
     "home": "dogont"
 }

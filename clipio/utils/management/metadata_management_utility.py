@@ -24,44 +24,6 @@ class MetadataManagementUtility:
         for resource in self.__metadata['resources']:
             tags.append(resource['tag'])
         return tags
-
-    def is_data_valid(self):
-        error = False
-        
-        if not self.__metadata['name'].strip():
-            ErrorLog.show("metadata.name can not be empty")
-            error = True
-        for resource in self.__metadata['resources']:
-            if not resource['tag'].strip():
-                ErrorLog.show("metadata.resource.tag can not be empty")
-                error = True
-            if ' ' in resource['tag']:
-                ErrorLog.show("metadata.resource.tag can not have whitespace. You give: %s" % (resource['tag']))
-                error = True
-
-            if not resource['tag'].islower():
-                ErrorLog.show("metadata.resource.tag can not have uppercase letters. You give: %s" % (resource['tag']))
-                error = True
-
-            only_types = [ sub['name'] for sub in CON.ACCEPTED_TYPES ]
-            if resource['type'] not in only_types:
-                ErrorLog.show("metadata.resource.type not found. You give: %s" % (resource['type']))
-                error = True
-            
-        only_tags = [ sub['tag'] for sub in self.__metadata['resources'] ]
-        for tag in only_tags:
-            if only_tags.count(tag) > 1:
-                ErrorLog.show("metadata.resource.tag can not be repeated. You give: %s" % (tag))
-                error = True
-
-        if not self.__coap_server['domain'].strip():
-            ErrorLog.show("coap_server.domain can not be empty")
-            error = True
-        if not self.__coap_server['port']:
-            ErrorLog.show("coap_server.port can not be empty")
-            error = True
-
-        return not error  
             
     def generate_metadata(self):
         self.__fix_metadata()
