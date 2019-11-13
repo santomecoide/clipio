@@ -5,9 +5,9 @@ from datetime import datetime
 from clipio.utils.log import ErrorLog, InfoLog
 
 class MetadataManagementUtility:
-    def __init__(self, metadata, coap_server):
-        self.__metadata = metadata
-        self.__coap_server = coap_server
+    def __init__(self, settings):
+        self.__metadata = settings.METADATA
+        self.__coap_server = settings.COAP_SERVER
 
     def __fix_metadata(self):        
         for key, value in self.__metadata.items(): 

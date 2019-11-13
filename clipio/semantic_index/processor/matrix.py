@@ -1,6 +1,6 @@
 import sys, math, random
 from tinydb import TinyDB, Query
-from semantic_index.processor.superlist import SuperList
+from clipio.semantic_index.processor.superlist import SuperList
 
 class MatrixDocs(list):
 
@@ -92,55 +92,39 @@ class Matrix:
         s += '\n * Documents read: %d' % len(self.docs)
         return s
 
-    def __remove_timed_out_docs(self, db):
-        last_docs = []
-        to_remove_ids = []
-        for doc in db.all():
-            repeated = db.search(Query().id == doc["id"])
-            if len(repeated) > 1:
-                to_remove_ids.append(repeated[0]["id"])
-                
-                add_doc = True
-                for last_doc in last_docs:
-                    if last_doc["id"] == repeated[-1]["id"]: 
-                        add_doc = False
-                if add_doc:
-                    last_docs.append(repeated[-1])
-                    
-        to_remove_ids = list(dict.fromkeys(to_remove_ids))
-        for remove_id in to_remove_ids:
-            db.remove(Query().id == remove_id)
-        db.insert_multiple(last_docs)
-
-    def dump(self, name):
+    def dump(self, tag):
         dump_db = TinyDB(
-            "semantics/" +
-            name + "/" + 
-            name + "_index.json"
+            'store/' + tag + '_index.json'
         )
         dump_db.purge_tables()
         dump_db.purge()
         
-        terms_table = dump_db.table("terms")
+        terms_table = dump_db.table('terms')
         terms_table.insert({
             'values': self.terms
         })
 
         for doc in self.docs:
-            dump_db.insert({
-                'id': doc['id'],
-                'values': doc['terms']
-            })
-
-        self.__remove_timed_out_docs(dump_db)
+            match = dump_db.search(Query()['id'] == doc['id'])
+            if len(match) > 0:
+                dump_db.update(
+                    {
+                        'id': doc['id'],
+                        'values': doc['terms']
+                    }, 
+                    Query()["id"] == doc['id']
+                )
+            else:
+                dump_db.insert({
+                    'id': doc['id'],
+                    'values': doc['terms']
+                })
 
         dump_db.close()
     
-    def load(self, name):
+    def load(self, tag):
         dump_db = TinyDB(
-            "semantics/" +
-            name + "/" + 
-            name + "_index.json"
+            "store/" + tag + "_index.json"
         )
 
         terms_table = dump_db.table("terms")

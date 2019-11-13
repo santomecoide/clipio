@@ -2043,7 +2043,7 @@ This information can then be leveraged by inference-based intelligent systems to
 
     <owl:Class rdf:about="&dogont;AssociatingDeviceNotification">
         <rdfs:label xml:lang="en">Associating device notification</rdfs:label>
-        <rdfs:label xml:lang="en">Notificación de asociación de dispositivo</rdfs:label>
+        <rdfs:label xml:lang="es">Notificación de asociación de dispositivo</rdfs:label>
         <rdfs:subClassOf rdf:resource="&dogont;ZWaveNotification"/>
         <rdfs:subClassOf>
             <owl:Restriction>
@@ -2356,7 +2356,7 @@ This information can then be leveraged by inference-based intelligent systems to
     <!-- http://elite.polito.it/ontologies/dogont.owl#BatteryLevelNotification -->
 
     <owl:Class rdf:about="&dogont;BatteryLevelNotification">
-        <rdfs:label xml:lang="en">Batery level notification</rdfs:label>
+        <rdfs:label xml:lang="en">Battery level notification</rdfs:label>
         <rdfs:label xml:lang="es">Notificación del nivel de batería</rdfs:label>
         <rdfs:subClassOf rdf:resource="&dogont;ParametricNotification"/>
         <rdfs:subClassOf>
@@ -2711,7 +2711,7 @@ This information can then be leveraged by inference-based intelligent systems to
     <!-- http://elite.polito.it/ontologies/dogont.owl#CDStateValue -->
 
     <owl:Class rdf:about="&dogont;CDStateValue">
-        <rdfs:label xml:lang="en">Valor de estado CDS</rdfs:label>
+        <rdfs:label xml:lang="en">state value CDS</rdfs:label>
         <rdfs:label xml:lang="es">Valor de estado de CDS</rdfs:label>
         <rdfs:subClassOf rdf:resource="&dogont;DiscreteValue"/>
         <rdfs:subClassOf>
@@ -3718,7 +3718,7 @@ This information can then be leveraged by inference-based intelligent systems to
     <!-- http://elite.polito.it/ontologies/dogont.owl#ConnectionState -->
 
     <owl:Class rdf:about="&dogont;ConnectionState">
-        <rdfs:label xml:lang="en">Conection state</rdfs:label>
+        <rdfs:label xml:lang="en">Connection state</rdfs:label>
         <rdfs:label xml:lang="es">Estado de la conexión</rdfs:label>
         <rdfs:subClassOf rdf:resource="&dogont;DoubleValuedState"/>
         <rdfs:subClassOf>
@@ -4308,7 +4308,7 @@ This information can then be leveraged by inference-based intelligent systems to
     <!-- http://elite.polito.it/ontologies/dogont.owl#DecreaseContrastCommand -->
 
     <owl:Class rdf:about="&dogont;DecreaseContrastCommand">
-        <rdfs:label xml:lang="en">Decresae contrast command</rdfs:label>
+        <rdfs:label xml:lang="en">Decrease contrast command</rdfs:label>
         <rdfs:label xml:lang="es">Comando de decremento del contraste</rdfs:label>
         <rdfs:subClassOf rdf:resource="&dogont;NonParametricCommand"/>
         <rdfs:subClassOf rdf:resource="&dogont;VoidCommand"/>
@@ -4382,7 +4382,7 @@ This information can then be leveraged by inference-based intelligent systems to
     <!-- http://elite.polito.it/ontologies/dogont.owl#DecreaseLuminosityCommand -->
 
     <owl:Class rdf:about="&dogont;DecreaseLuminosityCommand">
-        <rdfs:label xml:lang="en">Decrease luminisity command</rdfs:label>
+        <rdfs:label xml:lang="en">Decrease luminosity command</rdfs:label>
         <rdfs:label xml:lang="es">Comando de decremento de luz</rdfs:label>
         <rdfs:subClassOf rdf:resource="&dogont;NonParametricCommand"/>
         <rdfs:subClassOf rdf:resource="&dogont;VoidCommand"/>
@@ -4527,7 +4527,7 @@ This information can then be leveraged by inference-based intelligent systems to
     <!-- http://elite.polito.it/ontologies/dogont.owl#DecreaseVolumeCommand -->
 
     <owl:Class rdf:about="&dogont;DecreaseVolumeCommand">
-        <rdfs:label xml:lang="en">Drecrease volume command</rdfs:label>
+        <rdfs:label xml:lang="en">Decrease volume command</rdfs:label>
         <rdfs:label xml:lang="es">Comando de decremento de volumen</rdfs:label>
         <rdfs:subClassOf rdf:resource="&dogont;NonParametricCommand"/>
         <rdfs:subClassOf rdf:resource="&dogont;VoidCommand"/>
@@ -5878,7 +5878,6 @@ This information can then be leveraged by inference-based intelligent systems to
 
     <owl:Class rdf:about="&dogont;EliteGateway">
         <rdfs:label xml:lang="en">Elite Gateway</rdfs:label>
-        <rdfs:label xml:lang="en">EliteGateway</rdfs:label>
         <rdfs:label xml:lang="es">Gateway Elite</rdfs:label>
         <rdfs:subClassOf rdf:resource="&dogont;EliteComponent"/>
         <owl:disjointWith rdf:resource="&dogont;KonnexGateway"/>
@@ -6191,7 +6190,7 @@ This information can then be leveraged by inference-based intelligent systems to
     <!-- http://elite.polito.it/ontologies/dogont.owl#EventNotificationFunctionality -->
 
     <owl:Class rdf:about="&dogont;EventNotificationFunctionality">
-        <rdfs:label xml:lang="en">Event notification funcionality</rdfs:label>
+        <rdfs:label xml:lang="en">Event notification functionality</rdfs:label>
         <rdfs:label xml:lang="es">Funcionalidad de notificación de evento</rdfs:label>
         <rdfs:subClassOf rdf:resource="&dogont;SingleValuedNotificationFunctionality"/>
         <rdfs:subClassOf>
@@ -6580,7 +6579,7 @@ This information can then be leveraged by inference-based intelligent systems to
     <owl:Class rdf:about="&dogont;FloodSystem">
         <rdfs:label rdf:datatype="&xsd;string">Flood System</rdfs:label>
         <rdfs:label xml:lang="en">Flood System</rdfs:label>
-        <rdfs:label xml:lang="en">Sistema de inundación</rdfs:label>
+        <rdfs:label xml:lang="es">Sistema de inundación</rdfs:label>
         <rdfs:subClassOf rdf:resource="&dogont;SecuritySystem"/>
         <owl:disjointWith rdf:resource="&dogont;GasSystem"/>
         <rdfs:comment rdf:datatype="&xsd;string">System that detects the presence of flood</rdfs:comment>
@@ -6761,7 +6760,7 @@ This information can then be leveraged by inference-based intelligent systems to
     <!-- http://elite.polito.it/ontologies/dogont.owl#ForwardCommand -->
 
     <owl:Class rdf:about="&dogont;ForwardCommand">
-        <rdfs:label xml:lang="en">Foward command</rdfs:label>
+        <rdfs:label xml:lang="en">Forward command</rdfs:label>
         <rdfs:label xml:lang="es">Comando de envío</rdfs:label>
         <rdfs:subClassOf rdf:resource="&dogont;NonParametricCommand"/>
         <rdfs:subClassOf rdf:resource="&dogont;VoidCommand"/>
@@ -7297,7 +7296,7 @@ This information can then be leveraged by inference-based intelligent systems to
     <!-- http://elite.polito.it/ontologies/dogont.owl#GasoilHeater -->
 
     <owl:Class rdf:about="&dogont;GasoilHeater">
-        <rdfs:label xml:lang="en">Gasoil Heater</rdfs:label>
+        <rdfs:label xml:lang="en">Gas and oil Heater</rdfs:label>
         <rdfs:label xml:lang="es">Calentador a gas o aceite</rdfs:label>
         <rdfs:subClassOf rdf:resource="&dogont;Heater"/>
         <owl:disjointWith rdf:resource="&dogont;PelletHeater"/>
@@ -7541,7 +7540,7 @@ This information can then be leveraged by inference-based intelligent systems to
     <!-- http://elite.polito.it/ontologies/dogont.owl#Get1PhaseVoltageCommand -->
 
     <owl:Class rdf:about="&dogont;Get1PhaseVoltageCommand">
-        <rdfs:label xml:lang="en">Get 1 phase voltage copmmand</rdfs:label>
+        <rdfs:label xml:lang="en">Get 1 phase voltage command</rdfs:label>
         <rdfs:label xml:lang="es">Comando para obtener el voltaje monofásico</rdfs:label>
         <rdfs:subClassOf rdf:resource="&dogont;NonParametricCommand"/>
         <rdfs:subClassOf rdf:resource="&dogont;NonVoidCommand"/>
@@ -8219,7 +8218,7 @@ This information can then be leveraged by inference-based intelligent systems to
     <!-- http://elite.polito.it/ontologies/dogont.owl#GetFrequencyCommand -->
 
     <owl:Class rdf:about="&dogont;GetFrequencyCommand">
-        <rdfs:label xml:lang="en">Get frecuency command</rdfs:label>
+        <rdfs:label xml:lang="en">Get frequency command</rdfs:label>
         <rdfs:label xml:lang="es">Comando para obtener la frecuencia
 </rdfs:label>
         <rdfs:subClassOf rdf:resource="&dogont;NonParametricCommand"/>
@@ -8334,7 +8333,7 @@ This information can then be leveraged by inference-based intelligent systems to
     <!-- http://elite.polito.it/ontologies/dogont.owl#GetMultiTariff1PhaseActiveEnergyCommand -->
 
     <owl:Class rdf:about="&dogont;GetMultiTariff1PhaseActiveEnergyCommand">
-        <rdfs:label xml:lang="en">Get multitariff 1 phase active energy command</rdfs:label>
+        <rdfs:label xml:lang="en">Get Multi tariff 1 phase active energy command</rdfs:label>
         <rdfs:label xml:lang="es">Comando para obtener multitarifa de la energía activa en fase 1</rdfs:label>
         <rdfs:subClassOf rdf:resource="&dogont;NonVoidCommand"/>
         <rdfs:subClassOf rdf:resource="&dogont;ParametricCommand"/>
@@ -8369,7 +8368,7 @@ This information can then be leveraged by inference-based intelligent systems to
     <!-- http://elite.polito.it/ontologies/dogont.owl#GetMultiTariff1PhaseReactiveEnergyCommand -->
 
     <owl:Class rdf:about="&dogont;GetMultiTariff1PhaseReactiveEnergyCommand">
-        <rdfs:label xml:lang="en">Get Multitariff 1 reactive energy command</rdfs:label>
+        <rdfs:label xml:lang="en">Get Multi tariff  1 reactive energy command</rdfs:label>
         <rdfs:label xml:lang="es">Comando para obtener multitarifa de la energía reactiva en fase 1</rdfs:label>
         <rdfs:subClassOf rdf:resource="&dogont;NonVoidCommand"/>
         <rdfs:subClassOf rdf:resource="&dogont;ParametricCommand"/>
@@ -8404,7 +8403,7 @@ This information can then be leveraged by inference-based intelligent systems to
     <!-- http://elite.polito.it/ontologies/dogont.owl#GetMultiTariff3PhaseActiveEnergyCommand -->
 
     <owl:Class rdf:about="&dogont;GetMultiTariff3PhaseActiveEnergyCommand">
-        <rdfs:label xml:lang="en">Get multitariff 3 phase active energy command</rdfs:label>
+        <rdfs:label xml:lang="en">Get Multi tariff  3 phase active energy command</rdfs:label>
         <rdfs:label xml:lang="es">Comando para obtener multitarifa de la energía activa en fase 3</rdfs:label>
         <rdfs:subClassOf rdf:resource="&dogont;NonVoidCommand"/>
         <rdfs:subClassOf rdf:resource="&dogont;ParametricCommand"/>
@@ -8445,7 +8444,7 @@ This information can then be leveraged by inference-based intelligent systems to
     <!-- http://elite.polito.it/ontologies/dogont.owl#GetMultiTariff3PhaseReactiveEnergyCommand -->
 
     <owl:Class rdf:about="&dogont;GetMultiTariff3PhaseReactiveEnergyCommand">
-        <rdfs:label xml:lang="en">Get multitariff 3 phase reactive energy command</rdfs:label>
+        <rdfs:label xml:lang="en">Get Multi tariff  3 phase reactive energy command</rdfs:label>
         <rdfs:label xml:lang="es">Comando para obtener multitarifa de la energía reactiva en fase 3</rdfs:label>
         <rdfs:subClassOf rdf:resource="&dogont;NonVoidCommand"/>
         <rdfs:subClassOf rdf:resource="&dogont;ParametricCommand"/>
@@ -8685,7 +8684,7 @@ This information can then be leveraged by inference-based intelligent systems to
     <!-- http://elite.polito.it/ontologies/dogont.owl#GetRelativeHumidityCommand -->
 
     <owl:Class rdf:about="&dogont;GetRelativeHumidityCommand">
-        <rdfs:label xml:lang="en">Get relative humity command</rdfs:label>
+        <rdfs:label xml:lang="en">Get relative humidity command</rdfs:label>
         <rdfs:label xml:lang="es">Comando para obtener la humedad relativa</rdfs:label>
         <rdfs:subClassOf rdf:resource="&dogont;NonParametricCommand"/>
         <rdfs:subClassOf rdf:resource="&dogont;NonVoidCommand"/>
@@ -8743,7 +8742,7 @@ This information can then be leveraged by inference-based intelligent systems to
     <!-- http://elite.polito.it/ontologies/dogont.owl#GetRelativeHumidityMCommand -->
 
     <owl:Class rdf:about="&dogont;GetRelativeHumidityMCommand">
-        <rdfs:label xml:lang="en">Get relative humity M command</rdfs:label>
+        <rdfs:label xml:lang="en">Get relative humidity M command</rdfs:label>
         <rdfs:label xml:lang="es">Comando para obtener la humedad M relativa</rdfs:label>
         <rdfs:subClassOf rdf:resource="&dogont;NonVoidCommand"/>
         <rdfs:subClassOf rdf:resource="&dogont;ParametricCommand"/>
@@ -9493,7 +9492,7 @@ This information can then be leveraged by inference-based intelligent systems to
     <!-- http://elite.polito.it/ontologies/dogont.owl#HeatingEnergyMeasurementFunctionality -->
 
     <owl:Class rdf:about="&dogont;HeatingEnergyMeasurementFunctionality">
-        <rdfs:label xml:lang="en">Heating energy measuremnet functionality</rdfs:label>
+        <rdfs:label xml:lang="en">Heating energy measurement functionality</rdfs:label>
         <rdfs:label xml:lang="es">Funcionalidad de de medida de energía calorífica</rdfs:label>
         <rdfs:subClassOf rdf:resource="&dogont;QueryFunctionality"/>
         <rdfs:subClassOf>
@@ -10475,7 +10474,7 @@ This information can then be leveraged by inference-based intelligent systems to
     <!-- http://elite.polito.it/ontologies/dogont.owl#InstallApplianceCommand -->
 
     <owl:Class rdf:about="&dogont;InstallApplianceCommand">
-        <rdfs:label xml:lang="en">Install apliance command</rdfs:label>
+        <rdfs:label xml:lang="en">Install Appliance command</rdfs:label>
         <rdfs:label xml:lang="es">Coamndo para instalar aparato</rdfs:label>
         <rdfs:subClassOf rdf:resource="&dogont;ParametricCommand"/>
         <rdfs:subClassOf rdf:resource="&dogont;VoidCommand"/>
@@ -11170,7 +11169,7 @@ This information can then be leveraged by inference-based intelligent systems to
 
     <owl:Class rdf:about="&dogont;LightIntensityState">
         <rdfs:label rdf:datatype="&xsd;string">LightIntensityState</rdfs:label>
-        <rdfs:label xml:lang="en">LightIntensity State</rdfs:label>
+        <rdfs:label xml:lang="en">Light Intensity State</rdfs:label>
         <rdfs:label xml:lang="es">Estado de luminosidad</rdfs:label>
         <rdfs:subClassOf rdf:resource="&dogont;LevelState"/>
         <owl:disjointWith rdf:resource="&dogont;VolumeLevelState"/>
@@ -11186,7 +11185,7 @@ This information can then be leveraged by inference-based intelligent systems to
         <rdfs:label xml:lang="es">Funcionalidad de la regulación de luz</rdfs:label>
         <rdfs:subClassOf rdf:resource="&dogont;LevelControlFunctionality"/>
         <owl:disjointWith rdf:resource="&dogont;VolumeRegulationFunctionality"/>
-        <rdfs:comment rdf:datatype="&xsd;string">Functionalities for the regulation of ligth</rdfs:comment>
+        <rdfs:comment rdf:datatype="&xsd;string">Functionalities for the regulation of light</rdfs:comment>
         <rdfs:comment xml:lang="en">Light Regulation Functionality</rdfs:comment>
     </owl:Class>
     
@@ -11195,7 +11194,7 @@ This information can then be leveraged by inference-based intelligent systems to
     <!-- http://elite.polito.it/ontologies/dogont.owl#LightSensingFunctionality -->
 
     <owl:Class rdf:about="&dogont;LightSensingFunctionality">
-        <rdfs:label xml:lang="en">Ligth sensing functionality</rdfs:label>
+        <rdfs:label xml:lang="en">Light sensing functionality</rdfs:label>
         <rdfs:label xml:lang="es">Funcionalidad de sensado de luz</rdfs:label>
         <rdfs:subClassOf rdf:resource="&dogont;QueryFunctionality"/>
         <rdfs:subClassOf>
@@ -11482,7 +11481,7 @@ This information can then be leveraged by inference-based intelligent systems to
     <!-- http://elite.polito.it/ontologies/dogont.owl#Mobil_Phone -->
 
     <owl:Class rdf:about="&dogont;Mobil_Phone">
-        <rdfs:label xml:lang="en">Mobil Phone</rdfs:label>
+        <rdfs:label xml:lang="en">Mobile Phone</rdfs:label>
         <rdfs:label xml:lang="es">Teléfono móvil
 </rdfs:label>
         <rdfs:subClassOf rdf:resource="&dogont;Smart_Goods"/>
@@ -11493,8 +11492,8 @@ This information can then be leveraged by inference-based intelligent systems to
     <!-- http://elite.polito.it/ontologies/dogont.owl#Mobile_Phone -->
 
     <owl:Class rdf:about="&dogont;Mobile_Phone">
-        <rdfs:label rdf:datatype="&xsd;string">Mobil Phone</rdfs:label>
-        <rdfs:label xml:lang="en">Mobil Phone</rdfs:label>
+        <rdfs:label rdf:datatype="&xsd;string">Mobile Phone</rdfs:label>
+        <rdfs:label xml:lang="en">Mobile Phone</rdfs:label>
         <rdfs:label xml:lang="es">Teléfono Móvil</rdfs:label>
         <rdfs:subClassOf rdf:resource="&dogont;Phone"/>
     </owl:Class>
@@ -11566,11 +11565,11 @@ This information can then be leveraged by inference-based intelligent systems to
     <!-- http://elite.polito.it/ontologies/dogont.owl#MovementAndTemperatureSensor -->
 
     <owl:Class rdf:about="&dogont;MovementAndTemperatureSensor">
-        <rdfs:label xml:lang="en">Moviment and Temperature Sensor</rdfs:label>
+        <rdfs:label xml:lang="en">Movement and Temperature Sensor</rdfs:label>
         <rdfs:label xml:lang="es">Sensor de movimiento y temperatura</rdfs:label>
         <rdfs:subClassOf rdf:resource="&dogont;MovementSensor"/>
         <rdfs:subClassOf rdf:resource="&dogont;SingleTemperatureSensor"/>
-        <rdfs:comment xml:lang="en">Moviment and Temperature Sensor</rdfs:comment>
+        <rdfs:comment xml:lang="en">Movement and Temperature Sensor</rdfs:comment>
     </owl:Class>
     
 
@@ -11620,7 +11619,7 @@ This information can then be leveraged by inference-based intelligent systems to
     <!-- http://elite.polito.it/ontologies/dogont.owl#MovementSensor -->
 
     <owl:Class rdf:about="&dogont;MovementSensor">
-        <rdfs:label xml:lang="en">Moviment Sensor</rdfs:label>
+        <rdfs:label xml:lang="en">Movement Sensor</rdfs:label>
         <rdfs:label xml:lang="es">Sensor de movimiento</rdfs:label>
         <rdfs:subClassOf rdf:resource="&dogont;AccessControlSystem"/>
         <rdfs:subClassOf rdf:resource="&dogont;Sensor"/>
@@ -11644,7 +11643,7 @@ This information can then be leveraged by inference-based intelligent systems to
     <!-- http://elite.polito.it/ontologies/dogont.owl#MovementState -->
 
     <owl:Class rdf:about="&dogont;MovementState">
-        <rdfs:label xml:lang="en">Movent state</rdfs:label>
+        <rdfs:label xml:lang="en">Movement state</rdfs:label>
         <rdfs:label xml:lang="es">Estado de movimiento</rdfs:label>
         <rdfs:subClassOf rdf:resource="&dogont;DoubleValuedState"/>
         <rdfs:subClassOf>
@@ -11741,7 +11740,7 @@ This information can then be leveraged by inference-based intelligent systems to
     <!-- http://elite.polito.it/ontologies/dogont.owl#MultiTariffActiveEnergyStateValue -->
 
     <owl:Class rdf:about="&dogont;MultiTariffActiveEnergyStateValue">
-        <rdfs:label xml:lang="en">Multi  tariff active energy state value</rdfs:label>
+        <rdfs:label xml:lang="en">Multi tariff active energy state value</rdfs:label>
         <rdfs:label xml:lang="es">Multitarifa del valor de estado de energía activa</rdfs:label>
         <rdfs:subClassOf rdf:resource="&dogont;ContinuousValue"/>
         <rdfs:subClassOf>
@@ -12463,7 +12462,7 @@ This information can then be leveraged by inference-based intelligent systems to
     <!-- http://elite.polito.it/ontologies/dogont.owl#MultipleOnOffState -->
 
     <owl:Class rdf:about="&dogont;MultipleOnOffState">
-        <rdfs:label xml:lang="en">Mutiple On Off state</rdfs:label>
+        <rdfs:label xml:lang="en">Multiple On Off state</rdfs:label>
         <rdfs:label xml:lang="es">Estado múltiple On Off</rdfs:label>
         <rdfs:subClassOf rdf:resource="&dogont;DiscreteState"/>
         <rdfs:subClassOf>
@@ -13060,7 +13059,7 @@ This information can then be leveraged by inference-based intelligent systems to
     <!-- http://elite.polito.it/ontologies/dogont.owl#NonVoidCommand -->
 
     <owl:Class rdf:about="&dogont;NonVoidCommand">
-        <rdfs:label xml:lang="en">Non void comand</rdfs:label>
+        <rdfs:label xml:lang="en">Non void command</rdfs:label>
         <rdfs:label xml:lang="es">Comando no vacio</rdfs:label>
         <rdfs:subClassOf rdf:resource="&dogont;Command"/>
         <owl:disjointWith rdf:resource="&dogont;VoidCommand"/>
@@ -13742,7 +13741,7 @@ This information can then be leveraged by inference-based intelligent systems to
     <owl:Class rdf:about="&dogont;OnOffLightSwitch">
         <rdfs:label rdf:datatype="&xsd;string">On Off Light Switch</rdfs:label>
         <rdfs:label xml:lang="en">On Off Light Switch</rdfs:label>
-        <rdfs:label xml:lang="en">OnOffSwitch for Lights only, derives from ZigBee HA specifications</rdfs:label>
+        <rdfs:label xml:lang="en">On Off Switch for Lights only, derives from ZigBee HA specifications</rdfs:label>
         <rdfs:label xml:lang="es">Interruptor de encendido o apagado de la luz
 </rdfs:label>
         <rdfs:label xml:lang="es">Switch de encendido o apagado de la luz
@@ -13934,7 +13933,7 @@ This information can then be leveraged by inference-based intelligent systems to
 
     <owl:Class rdf:about="&dogont;OnOffSwitch">
         <rdfs:label rdf:datatype="&xsd;string">On Off Switch</rdfs:label>
-        <rdfs:label xml:lang="en">Generic OnOff switch, derives from the ZigBee Home Automation specification</rdfs:label>
+        <rdfs:label xml:lang="en">Generic On Off switch, derives from the ZigBee Home Automation specification</rdfs:label>
         <rdfs:label xml:lang="en">On Off Switch</rdfs:label>
         <rdfs:label xml:lang="es">Interruptor de encendido o apagado
 </rdfs:label>
@@ -14383,7 +14382,7 @@ This information can then be leveraged by inference-based intelligent systems to
     <!-- http://elite.polito.it/ontologies/dogont.owl#PanRightCommand -->
 
     <owl:Class rdf:about="&dogont;PanRightCommand">
-        <rdfs:label xml:lang="en">Pan rigth command</rdfs:label>
+        <rdfs:label xml:lang="en">Pan right command</rdfs:label>
         <rdfs:label xml:lang="es">Comando para la panorámica derecha</rdfs:label>
         <rdfs:subClassOf rdf:resource="&dogont;NonParametricCommand"/>
         <rdfs:subClassOf rdf:resource="&dogont;VoidCommand"/>
@@ -14500,7 +14499,7 @@ This information can then be leveraged by inference-based intelligent systems to
     <!-- http://elite.polito.it/ontologies/dogont.owl#ParametricNotification -->
 
     <owl:Class rdf:about="&dogont;ParametricNotification">
-        <rdfs:label xml:lang="en">Paraametric notification</rdfs:label>
+        <rdfs:label xml:lang="en">Parametric notification</rdfs:label>
         <rdfs:label xml:lang="es">Notificación de parámetros</rdfs:label>
         <rdfs:subClassOf rdf:resource="&dogont;Notification"/>
         <rdfs:subClassOf>
@@ -14660,7 +14659,7 @@ This information can then be leveraged by inference-based intelligent systems to
     <owl:Class rdf:about="&dogont;Phone">
         <rdfs:label rdf:datatype="&xsd;string">Phone</rdfs:label>
         <rdfs:label xml:lang="en">Phone</rdfs:label>
-        <rdfs:label xml:lang="en">Teléfono</rdfs:label>
+        <rdfs:label xml:lang="es">Teléfono</rdfs:label>
         <owl:equivalentClass rdf:resource="&dogont;WirelessPhone"/>
         <rdfs:subClassOf rdf:resource="&dogont;Communication"/>
         <rdfs:comment rdf:datatype="&xsd;string">Appliance to comunicate with other person</rdfs:comment>
@@ -14668,16 +14667,16 @@ This information can then be leveraged by inference-based intelligent systems to
     
 
 
-    <!-- http://elite.polito.it/ontologies/dogont.owl#PhonoStateValue -->
+    <!-- http://elite.polito.it/ontologies/dogont.owl#PhoneStateValue -->
 
-    <owl:Class rdf:about="&dogont;PhonoStateValue">
-        <rdfs:label xml:lang="en">Phono set value</rdfs:label>
+    <owl:Class rdf:about="&dogont;PhoneStateValue">
+        <rdfs:label xml:lang="en">Phone set value</rdfs:label>
         <rdfs:label xml:lang="es">Conjunto de fono valores</rdfs:label>
         <rdfs:subClassOf rdf:resource="&dogont;DiscreteValue"/>
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="&dogont;realStateValue"/>
-                <owl:hasValue rdf:datatype="&xsd;string">phono</owl:hasValue>
+                <owl:hasValue rdf:datatype="&xsd;string">phone</owl:hasValue>
             </owl:Restriction>
         </rdfs:subClassOf>
     </owl:Class>
@@ -15055,7 +15054,7 @@ This information can then be leveraged by inference-based intelligent systems to
     <!-- http://elite.polito.it/ontologies/dogont.owl#PowerMeasurementFunctionality -->
 
     <owl:Class rdf:about="&dogont;PowerMeasurementFunctionality">
-        <rdfs:label xml:lang="en">Power measurement funcionality</rdfs:label>
+        <rdfs:label xml:lang="en">Power measurement functionality</rdfs:label>
         <rdfs:label xml:lang="es">Funcionalidad de medida de potencia</rdfs:label>
         <rdfs:subClassOf rdf:resource="&dogont;QueryFunctionality"/>
     </owl:Class>
@@ -15097,8 +15096,8 @@ This information can then be leveraged by inference-based intelligent systems to
     <!-- http://elite.polito.it/ontologies/dogont.owl#PresenceAndMovementSensor -->
 
     <owl:Class rdf:about="&dogont;PresenceAndMovementSensor">
-        <rdfs:label rdf:datatype="&xsd;string">Presence and Moviment Sensor</rdfs:label>
-        <rdfs:label xml:lang="en">Presence and Moviment Sensor</rdfs:label>
+        <rdfs:label rdf:datatype="&xsd;string">Presence and Movement Sensor</rdfs:label>
+        <rdfs:label xml:lang="en">Presence and Movement Sensor</rdfs:label>
         <rdfs:label xml:lang="es">Sensor de presencia y movimiento</rdfs:label>
         <rdfs:subClassOf rdf:resource="&dogont;MovementSensor"/>
         <rdfs:subClassOf rdf:resource="&dogont;PresenceSensor"/>
@@ -15272,7 +15271,7 @@ This information can then be leveraged by inference-based intelligent systems to
     <!-- http://elite.polito.it/ontologies/dogont.owl#PressureMeasurementFunctionality -->
 
     <owl:Class rdf:about="&dogont;PressureMeasurementFunctionality">
-        <rdfs:label xml:lang="en">Preassure measurement functionality</rdfs:label>
+        <rdfs:label xml:lang="en">Pressure measurement functionality</rdfs:label>
         <rdfs:label xml:lang="es">Funcionalidad de medida de presión</rdfs:label>
         <rdfs:subClassOf rdf:resource="&dogont;QueryFunctionality"/>
         <rdfs:subClassOf>
@@ -15289,7 +15288,7 @@ This information can then be leveraged by inference-based intelligent systems to
     <!-- http://elite.polito.it/ontologies/dogont.owl#PressureMeasurementMNotification -->
 
     <owl:Class rdf:about="&dogont;PressureMeasurementMNotification">
-        <rdfs:label xml:lang="en">Pressure measurement M notificación</rdfs:label>
+        <rdfs:label xml:lang="en">Pressure measurement M notification</rdfs:label>
         <rdfs:label xml:lang="es">Notificación de medida M de presión </rdfs:label>
         <rdfs:subClassOf rdf:resource="&dogont;ParametricNotification"/>
         <rdfs:subClassOf>
@@ -15319,7 +15318,7 @@ This information can then be leveraged by inference-based intelligent systems to
     <!-- http://elite.polito.it/ontologies/dogont.owl#PressureMeasurementNotification -->
 
     <owl:Class rdf:about="&dogont;PressureMeasurementNotification">
-        <rdfs:label xml:lang="en">Pressure measurement notificación</rdfs:label>
+        <rdfs:label xml:lang="en">Pressure measurement notification</rdfs:label>
         <rdfs:label xml:lang="es">Notificación de medida  de presión </rdfs:label>
         <rdfs:subClassOf rdf:resource="&dogont;ParametricNotification"/>
         <rdfs:subClassOf>
@@ -18132,7 +18131,7 @@ This information can then be leveraged by inference-based intelligent systems to
     <!-- http://elite.polito.it/ontologies/dogont.owl#SinglePhaseCurrentMeasurementNotificationFunctionality -->
 
     <owl:Class rdf:about="&dogont;SinglePhaseCurrentMeasurementNotificationFunctionality">
-        <rdfs:label xml:lang="en">Single phase current measurement notification funcionality</rdfs:label>
+        <rdfs:label xml:lang="en">Single phase current measurement notification functionality</rdfs:label>
         <rdfs:label xml:lang="es">Funcionalidad de notificación de la medida actual de la corriente monofásico</rdfs:label>
         <rdfs:subClassOf rdf:resource="&dogont;CurrentMeasurementNotificationFunctionality"/>
         <rdfs:subClassOf>
@@ -18918,7 +18917,7 @@ An electronic device producing a similar sound as a signal or warning: a police 
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="&dogont;hasStateValue"/>
-                <owl:someValuesFrom rdf:resource="&dogont;PhonoStateValue"/>
+                <owl:someValuesFrom rdf:resource="&dogont;PhoneStateValue"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
@@ -18999,7 +18998,7 @@ An electronic device producing a similar sound as a signal or warning: a police 
     <!-- http://elite.polito.it/ontologies/dogont.owl#SpeedNotificationFunctionality -->
 
     <owl:Class rdf:about="&dogont;SpeedNotificationFunctionality">
-        <rdfs:label xml:lang="en">Speed notificaction functionality</rdfs:label>
+        <rdfs:label xml:lang="en">Speed notification functionality</rdfs:label>
         <rdfs:label xml:lang="es">Funcionalidad de notificación de velocidad
 </rdfs:label>
         <rdfs:subClassOf rdf:resource="&dogont;LevelNotificationFunctionality"/>
@@ -19333,7 +19332,7 @@ An electronic device producing a similar sound as a signal or warning: a police 
     <!-- http://elite.polito.it/ontologies/dogont.owl#StartSupercoolingCommand -->
 
     <owl:Class rdf:about="&dogont;StartSupercoolingCommand">
-        <rdfs:label xml:lang="en">Start supercooling command</rdfs:label>
+        <rdfs:label xml:lang="en">Start super cooling command</rdfs:label>
         <rdfs:label xml:lang="es">Comando para empezar el súper enfriamiento</rdfs:label>
         <rdfs:subClassOf rdf:resource="&dogont;NonParametricCommand"/>
         <rdfs:subClassOf rdf:resource="&dogont;VoidCommand"/>
@@ -20125,7 +20124,7 @@ An electronic device producing a similar sound as a signal or warning: a police 
     <!-- http://elite.polito.it/ontologies/dogont.owl#SuperFreezingNotification -->
 
     <owl:Class rdf:about="&dogont;SuperFreezingNotification">
-        <rdfs:label xml:lang="en">Super frezing notification</rdfs:label>
+        <rdfs:label xml:lang="en">Super freezing notification</rdfs:label>
         <rdfs:label xml:lang="es">Notificación de súper congelamiento</rdfs:label>
         <rdfs:subClassOf rdf:resource="&dogont;NonParametricNotification"/>
         <owl:disjointUnionOf rdf:parseType="Collection">
@@ -20795,7 +20794,7 @@ An electronic device producing a similar sound as a signal or warning: a police 
     <!-- http://elite.polito.it/ontologies/dogont.owl#ThermostatQueryFunctionality -->
 
     <owl:Class rdf:about="&dogont;ThermostatQueryFunctionality">
-        <rdfs:label xml:lang="en">Thermostar query functionality </rdfs:label>
+        <rdfs:label xml:lang="en">Thermostat query functionality </rdfs:label>
         <rdfs:label xml:lang="es">Funcionalidad de búsqueda del termostato</rdfs:label>
         <rdfs:subClassOf rdf:resource="&dogont;QueryFunctionality"/>
     </owl:Class>
@@ -21222,7 +21221,7 @@ An electronic device producing a similar sound as a signal or warning: a police 
     <!-- http://elite.polito.it/ontologies/dogont.owl#ThreePhaseCurrentMeasurementNotificationFunctionality -->
 
     <owl:Class rdf:about="&dogont;ThreePhaseCurrentMeasurementNotificationFunctionality">
-        <rdfs:label xml:lang="en">Three phase current measurement notification funcionality</rdfs:label>
+        <rdfs:label xml:lang="en">Three phase current measurement notification functionality</rdfs:label>
         <rdfs:label xml:lang="es">Funcionalidad de notifiacación de medida de corriente trifásica</rdfs:label>
         <rdfs:subClassOf rdf:resource="&dogont;CurrentMeasurementNotificationFunctionality"/>
         <rdfs:subClassOf>
@@ -21238,7 +21237,7 @@ An electronic device producing a similar sound as a signal or warning: a police 
     <!-- http://elite.polito.it/ontologies/dogont.owl#ThreePhaseCurrentMeter -->
 
     <owl:Class rdf:about="&dogont;ThreePhaseCurrentMeter">
-        <rdfs:label xml:lang="en">Thre phase current meter</rdfs:label>
+        <rdfs:label xml:lang="en">Three phase current meter</rdfs:label>
         <rdfs:label xml:lang="es">Medidor de corriente trifásica</rdfs:label>
         <rdfs:subClassOf rdf:resource="&dogont;CurrentMeter"/>
         <rdfs:subClassOf>
@@ -21513,7 +21512,7 @@ An electronic device producing a similar sound as a signal or warning: a police 
     <!-- http://elite.polito.it/ontologies/dogont.owl#ThreePhaseReactivePowerMeasurementNotification -->
 
     <owl:Class rdf:about="&dogont;ThreePhaseReactivePowerMeasurementNotification">
-        <rdfs:label xml:lang="en">Three phasereactive power measurement notification</rdfs:label>
+        <rdfs:label xml:lang="en">Three Phase Reactive power measurement notification</rdfs:label>
         <rdfs:label xml:lang="es">Notificación de medida de potencia reactiva trifásica</rdfs:label>
         <rdfs:subClassOf rdf:resource="&dogont;ParametricNotification"/>
         <rdfs:subClassOf>
@@ -21828,8 +21827,8 @@ An electronic device producing a similar sound as a signal or warning: a police 
 
     <owl:Class rdf:about="&dogont;ToggleRelay">
         <rdfs:label rdf:datatype="&xsd;string">Toggle Relay</rdfs:label>
-        <rdfs:label xml:lang="en">Activar relé</rdfs:label>
         <rdfs:label xml:lang="en">Toggle Relay</rdfs:label>
+        <rdfs:label xml:lang="es">Activar relé</rdfs:label>
         <rdfs:subClassOf rdf:resource="&dogont;Control"/>
         <rdfs:subClassOf>
             <owl:Restriction>
@@ -21884,7 +21883,7 @@ An electronic device producing a similar sound as a signal or warning: a police 
     <!-- http://elite.polito.it/ontologies/dogont.owl#TridimensionalAccelerationNotification -->
 
     <owl:Class rdf:about="&dogont;TridimensionalAccelerationNotification">
-        <rdfs:label xml:lang="en">Tridemensional acceleration notification</rdfs:label>
+        <rdfs:label xml:lang="en">Tridimensional acceleration notification</rdfs:label>
         <rdfs:label xml:lang="es">Notificación de aceleración tridimensional</rdfs:label>
         <rdfs:subClassOf rdf:resource="&dogont;ParametricNotification"/>
         <rdfs:subClassOf>
@@ -22037,7 +22036,7 @@ An electronic device producing a similar sound as a signal or warning: a police 
     <!-- http://elite.polito.it/ontologies/dogont.owl#TunerNotificationFunctionality -->
 
     <owl:Class rdf:about="&dogont;TunerNotificationFunctionality">
-        <rdfs:label xml:lang="en">Turner notification funcionality</rdfs:label>
+        <rdfs:label xml:lang="en">Turner notification functionality</rdfs:label>
         <rdfs:label xml:lang="es">Función de notificación de sintonización</rdfs:label>
         <rdfs:subClassOf rdf:resource="&dogont;LevelNotificationFunctionality"/>
         <rdfs:subClassOf>
@@ -23565,7 +23564,7 @@ It mus be noticed that the functionality modeling uses existential quantifiers f
             <rdf:Description rdf:about="&dogont;OnStateValue"/>
             <rdf:Description rdf:about="&dogont;OpenStateValue"/>
             <rdf:Description rdf:about="&dogont;PauseStateValue"/>
-            <rdf:Description rdf:about="&dogont;PhonoStateValue"/>
+            <rdf:Description rdf:about="&dogont;PhoneStateValue"/>
             <rdf:Description rdf:about="&dogont;PlayStateValue"/>
             <rdf:Description rdf:about="&dogont;PresentStateValue"/>
             <rdf:Description rdf:about="&dogont;ProgramInterruptedStateValue"/>
@@ -23673,7 +23672,7 @@ It mus be noticed that the functionality modeling uses existential quantifiers f
             <rdf:Description rdf:about="&dogont;OnStateValue"/>
             <rdf:Description rdf:about="&dogont;OpenStateValue"/>
             <rdf:Description rdf:about="&dogont;PauseStateValue"/>
-            <rdf:Description rdf:about="&dogont;PhonoStateValue"/>
+            <rdf:Description rdf:about="&dogont;PhoneStateValue"/>
             <rdf:Description rdf:about="&dogont;PlayStateValue"/>
             <rdf:Description rdf:about="&dogont;PresentStateValue"/>
             <rdf:Description rdf:about="&dogont;ProgramInterruptedStateValue"/>

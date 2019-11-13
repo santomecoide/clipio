@@ -5,10 +5,7 @@ def get_wup_similarity(term_a, term_b):
     term_a_list = wn.synsets(term_a, lang="spa")
     term_b_list = wn.synsets(term_b, lang="spa")
 
-    print(term_a_list)
-    print(term_b_list)
-
-    sim_list = []
+    sim_list = [0]
     for a in term_a_list:
         for b in term_b_list:
             sim = wn.wup_similarity(a, b)
@@ -18,4 +15,4 @@ def get_wup_similarity(term_a, term_b):
 
     return statistics.mean(sim_list)
 
-print(get_wup_similarity('hombre', 'grande'))
+print(get_wup_similarity('persona', 'calefacción'))

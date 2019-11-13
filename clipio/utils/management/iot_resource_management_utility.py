@@ -2,8 +2,8 @@ import os
 from clipio.utils.seed import iot_resource_seed
 
 class IoTResourceManagementUtility:
-    def __init__(self, metadata):
-        self.__metadata = metadata
+    def __init__(self, settings):
+        self.__metadata = settings.METADATA
 
     def __generate_resource(self, resource):
         format_data = iot_resource_seed.format(

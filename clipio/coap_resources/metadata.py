@@ -2,8 +2,8 @@ import json
 from coapthon.resources.resource import Resource
 
 class Metadata(Resource):
-    def __init__(self, name="metadata"):
-        super(Metadata, self).__init__(name)
+    def __init__(self):
+        super(Metadata, self).__init__("metadata")
         self.payload = "Metadata Resource"
 
     def __fix(self, data):

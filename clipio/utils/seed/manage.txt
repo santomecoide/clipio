@@ -26,22 +26,22 @@ if __name__ == "__main__":
 		
 		if com == "generate" or com == "g":
 			settings_mu = SettingsManagementUtility(settings)
-			metadata_mu = MetadataManagementUtility(settings.METADATA, settings.COAP_SERVER)
-			iot_resource_mu = IoTResourceManagementUtility(settings.METADATA)
-			app_mu = AppManagementUtility(settings.METADATA)
+			metadata_mu = MetadataManagementUtility(settings)
+			iot_resource_mu = IoTResourceManagementUtility(settings)
+			app_mu = AppManagementUtility(settings)
 			
-			if settings_mu.is_data_valid():
+			if settings_mu.validate():
 				metadata_mu.generate_metadata()
 				iot_resource_mu.generate_resources()
 				app_mu.generate_files()
 		
 		if com == "server":
 			settings_mu = SettingsManagementUtility(settings)
-			metadata_mu = MetadataManagementUtility(settings.METADATA, settings.COAP_SERVER)
-			crawler = Crawler(settings.CRAWLER)
-			server_mu = ServerManagementUtility(settings.COAP_SERVER)
+			metadata_mu = MetadataManagementUtility(settings)
+			crawler = Crawler(settings)
+			server_mu = ServerManagementUtility(settings)
 			
-			if settings_mu.is_data_valid():
+			if settings_mu.validate():
 				for tag in metadata_mu.tags():
 					server_mu.add_iot_resource(tag) 
 				

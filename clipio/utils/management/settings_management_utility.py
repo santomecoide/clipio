@@ -1,11 +1,12 @@
 from clipio.utils.log import ErrorLog, InfoLog
 import clipio.constants as CON 
 
+#falta poner lo de las ontologias
 class SettingsManagementUtility:
     def __init__(self, settings):
-        self.__metadata = settings['METADATA']
-        self.__coap_server = settings['COAP_SERVER']
-        self.__crawler = settings['CRAWLER']
+        self.__metadata = settings.METADATA
+        self.__coap_server = settings.COAP_SERVER
+        self.__crawler = settings.CRAWLER
     
     def validate(self):
         error = False

@@ -3,17 +3,23 @@ from coapthon.server.coap import CoAP
 
 from clipio.coap_resources.metadata import Metadata
 #from clipio.coap_resources.eca import Eca
-#from clipio.coap_resources.context import Context
+from clipio.coap_resources.context import Context
 
 from clipio.utils.log import ErrorLog, InfoLog
 
 class ServerManagementUtility():
-    def __init__(self, coap_server):
-        self.__coap = CoAP((coap_server['domain'], coap_server['port']))       
+    def __init__(self, settings):
+        self.__coap_server = settings.COAP_SERVER
+        self.__ontologies = settings.ONTOLOGIES
         
-        self.__domain = coap_server['domain']
-        self.__port = coap_server['port']
         self.__resources = []
+        self.__domain = self.__coap_server['domain']
+        self.__port = self.__coap_server['port']
+        
+        self.__coap = CoAP((
+            self.__domain, 
+            self.__port
+        ))
         
         self.__coap.add_resource('metadata', Metadata())
         self.__resources.append('metadata')
@@ -21,7 +27,7 @@ class ServerManagementUtility():
         #self.__coap.add_resource('eca', Eca())
         self.__resources.append('eca')
 
-        #self.__coap.add_resource('context', Context())
+        self.__coap.add_resource('context', Context(self.__ontologies))
         self.__resources.append('context')
 
     def add_iot_resource(self, name):

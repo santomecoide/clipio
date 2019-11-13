@@ -5,8 +5,8 @@ from tinydb import TinyDB, Query
 from coapthon.resources.resource import Resource
 
 class Eca(Resource):
-    def __init__(self, name="eca"):
-        super(Eca, self).__init__(name)
+    def __init__(self):
+        super(Eca, self).__init__("eca")
         self.payload = "Eca Resource"
 
     def __update_state(self, state):

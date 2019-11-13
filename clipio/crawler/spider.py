@@ -9,7 +9,7 @@ class Spider(object):
     def __init__(self, target_url):
         self.__to_visit = []
         self.__visted = []
-        self.__target_url = target_url
+        self.__target_url = self.__clean(target_url)
 
     def __clean(self, url):
         idx = url.find('#')
@@ -59,40 +59,38 @@ class Spider(object):
         return data_dict
     
     def __parser(self, data_dict):   
-        urls = []
-        metadata_corpus = ''
+        url_list = []
+        corpus = ''
 
         for word in CON.METADATA_KEY_WORDS:
-            metadata_result = self.__find_key(word, data_dict)
-            for metadata_dot in list(metadata_result):
-                metadata_corpus += ' ' + metadata_dot
+            corpus_result = self.__find_key(word, data_dict)
+            for corpus_dot in list(corpus_result):
+                corpus += ' ' + corpus_dot
 
         for word in CON.URL_KEY_WORDS:
             url_result = self.__find_key(word, data_dict)
             url_result_list = list(url_result)
-            urls += url_result_list
+            url_list += url_result_list
 
-        return metadata_corpus, urls        
-
-    def metadata_corpus(self):
-        clean_url = self.__clean(self.__target_url)
-        self.__to_visit.append(clean_url)   
-
-        corpus = ""
-        metadata_list = []
+        return corpus, url_list        
+    
+    def collect(self):
+        metadata = self.__request(self.__target_url)
+        
+        self.__to_visit.append(self.__target_url)   
+        corpus_list = []
         while len(self.__to_visit) > 0:
             url = self.__to_visit.pop(0)
             data = self.__request(url)
             
             if data:
-                metadata_list.append(data)
-                _corpus, urls = self.__parser(data)
+                corpus, url_list = self.__parser(data)
                 self.__visted.append(url)
             
-                corpus += _corpus 
+                corpus_list.append(corpus) 
 
-                for url in urls:
+                for url in url_list:
                     if url not in self.__visted and url not in self.__to_visit:
                         self.__to_visit.append(url)
 
-        return corpus, metadata_list
+        return metadata, corpus_list

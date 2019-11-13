@@ -30,6 +30,14 @@ CRAWLER = {
 	"enabled": True,
 	"protocol": "coap",
 	"path": "metadata",
-	"delay_time": 100,
+	"delay_time": 3600,
 	"url_list": [] 
 }
+
+ONTOLOGIES = [
+	{ 
+		"tag": "home", 
+		"min_wup_similarity": 0.5,
+		"enabled": True 
+	}
+]

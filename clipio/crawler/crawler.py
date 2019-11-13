@@ -5,23 +5,47 @@ import threading
 from tinydb import TinyDB, Query
 from clipio.crawler.spider import Spider
 
-class Crawler(threading.Thread):
-    def __init__(self, crawler_settings): 
-        threading.Thread.__init__(self) 
-        self.__url_crawling_yet = []
-        self.__spider_id_running = []
+from clipio.semantic_index.semantic_index import SemanticIndex
+from clipio.semantic_index import ontologies
+
+class Crawler():
+    def __init__(self, settings):
+        self.__crawler = settings.CRAWLER
+        self.__ontologies = settings.ONTOLOGIES
         
-        self.__enabled = crawler_settings['enabled']
         self.__run_flag = False
-        self.__delay_time = crawler_settings['delay_time']  
+        self.__url_crawling_yet = []
+        self.__enabled = self.__crawler['enabled']
+        self.__delay_time = self.__crawler['delay_time']
+
+        self.__semantic_index_list = []
+        for ontology_settings in self.__ontologies:
+            if ontology_settings['enabled']:
+                for ontology in ontologies:
+                    if ontology_settings['tag'] == ontology['tag']:
+                        ontology_settings['file'] = ontology['file']
+                        si_obj = SemanticIndex(ontology_settings)
+                        self.__semantic_index_list.append(si_obj)  
         
         self.__url_list = []
-        for url in crawler_settings['url_list']:
+        for url in self.__crawler['url_list']:
             self.__url_list.append(self.__complete_url(
                 str(url), 
-                crawler_settings['protocol'],
-                crawler_settings['path']
+                self.__crawler['protocol'],
+                self.__crawler['path']
             ))
+
+        print("crawler init")
+
+    def __validate_metadata(self, metadata):
+        validate = False
+        if metadata:
+            validate = True
+            if "id" not in metadata:
+                validate = False
+            if "properties" not in metadata:
+                validate = False
+        return validate
 
     def __complete_url(self, url, protocol, path):
         protocol_full = protocol + "://"
@@ -32,29 +56,33 @@ class Crawler(threading.Thread):
             url = url + path_full
         return url
 
-    def __store(self, metadata_list):
+    #pasar texto a constantes
+    def __store(self, metadata):
         context_db = TinyDB("store/contextdb.json")
-        for metadata in metadata_list:
-            match = context_db.search(Query()["id"] == metadata['id'])
-            if len(match) > 0:
-                context_db.update(metadata, Query()["id"] == metadata['id'])
-            else:
-                context_db.insert(metadata)        
+        match = context_db.search(Query()["id"] == metadata['id'])
+        if len(match) > 0:
+            context_db.update(metadata, Query()["id"] == metadata['id'])
+        else:
+            context_db.insert(metadata)        
         context_db.close()
     
     def __spider(self, url):
         spider = Spider(url)
-        corpus, metadata_list = spider.metadata_corpus()
-        if len(metadata_list) > 0:
-            self.__store(metadata_list)
+        metadata, corpus_list = spider.collect()
         
-        #llamar al inice semantico cargar y guardar documento 
-        if corpus != "":
-            pass
+        if self.__validate_metadata(metadata):
+            self.__store(metadata)  
+        
+            if len(corpus_list) > 0:
+                corpus_str = ' '.join(corpus_list)
+                for semantic_index in self.__semantic_index_list:
+                    semantic_index.load()
+                    semantic_index.add_document(metadata['id'], corpus_str) 
+                    semantic_index.save()
         
         self.__url_crawling_yet.remove(url)
 
-    def run(self):
+    def __run(self):
         self.__run_flag = True
         while self.__run_flag & self.__enabled:
             for url in self.__url_list:
@@ -64,16 +92,19 @@ class Crawler(threading.Thread):
                         target=self.__spider, 
                         args=(url, )
                     )
+                    spider_thread.daemon = True
                     spider_thread.start()
-                    self.__spider_id_running.append(spider_thread._ident)
-            time.sleep(self.__delay_time)
+            
+            for i in range(self.__delay_time):
+                if i > 0 and not self.__run_flag:
+                    break
+                time.sleep(1)
+        print("Crawler end")
 
-    def stop(self): 
-        for thread_id in self.__spider_id_running:
-            res = ctypes.pythonapi.PyThreadState_SetAsyncExc(
-                thread_id, 
-                ctypes.py_object(SystemExit)
-            ) 
-            if res > 1: 
-                ctypes.pythonapi.PyThreadState_SetAsyncExc(thread_id, 0)
+    def run(self):
+        run_thread = threading.Thread(target=self.__run)
+        run_thread.start()
+
+    def stop(self):
         self.__run_flag = False
+        print("stopping crawler...")

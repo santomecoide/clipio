@@ -3,8 +3,8 @@ import clipio.constants as CON
 from clipio.utils.seed import app_resource_seed
 
 class AppManagementUtility:
-    def __init__(self, metadata):
-        self.__metadata = metadata
+    def __init__(self, settings):
+        self.__metadata = settings.METADATA
 
     def __default_value(self, type_):
         for accepted_type in CON.ACCEPTED_TYPES:

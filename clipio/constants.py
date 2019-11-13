@@ -6,13 +6,20 @@ ACCEPTED_TYPES = [
 ]
 
 ACCEPTED_PROTOCOLS = ['coap']
-MIN_CRAWLER_DELAY_TIME = 60*60 #1h
 
-ONTOLOGIES = {
-    "home": "dogont"
-}
+MIN_CRAWLER_DELAY_TIME = 60*60 #1h
 
 METADATA_KEY_WORDS = ["name", "description", "title"]
 URL_KEY_WORDS = ["href", "link"]
 
 COAP_PORT = 5683
+
+ONTOLOGY_QUERY = """
+    PREFIX owl: <http://www.w3.org/2002/07/owl#>
+    SELECT ?class ?label
+    WHERE { 
+        ?class a owl:Class .
+        ?class rdfs:label ?label
+        FILTER (lang(?label) = 'en')
+    }
+"""
