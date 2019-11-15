@@ -1,3 +1,4 @@
+import json
 from clipio.utils.log import ErrorLog, InfoLog
 import clipio.constants as CON 
 
@@ -169,7 +170,7 @@ class SettingsManagementUtility:
 
         return correct
 
-    def validate(self):
+    def validate(self, compare=False):
         correct = True
         
         correct = (
@@ -180,4 +181,33 @@ class SettingsManagementUtility:
             self.__ontologies_val()
         )
 
+        if compare:
+            with open('generated/metadata.json') as fp:
+                metadata = json.load(fp)
+
+                """ ver -> NAME 
+                    ver -> COAP_SERVER """
+
+                for resource in self.__metadata['resources']:
+                    tag_found = False
+                    for property_key in metadata['properties'].keys():
+                        if property_key == resource['tag']:
+                            property_ = metadata['properties'][property_key]
+                            
+                            if resource['type'] != property_['type']:
+                                ErrorLog.show("%s not foun in metadata. use manage.py generate metadata" % (resource['type']))
+                                correct = False
+
+                            """ if resource['mqtt']['enabled']:
+                                ver -> port
+				                ver -> server """
+
+                            tag_found = True
+                            break                        
+                    
+                    if not tag_found:
+                        ErrorLog.show("%s not foun in metadata. use manage.py generate metadata" % (resource['tag']))
+                        correct = False
+
+        
         return correct
