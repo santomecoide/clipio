@@ -32,7 +32,7 @@ class Context(Resource):
         except IndexError:
             pass
         
-        context_db = TinyDB("store/contextdb.json")
+        context_db = TinyDB("generated/contextdb.json")
         match = context_db.search(Query()["id"] == id_)
         if len(match) > 0:
             payload = match[0]

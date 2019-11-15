@@ -94,7 +94,7 @@ class Matrix:
 
     def dump(self, tag):
         dump_db = TinyDB(
-            'store/' + tag + '_index.json'
+            'generated/' + tag + '_index.json'
         )
         dump_db.purge_tables()
         dump_db.purge()
@@ -124,7 +124,7 @@ class Matrix:
     
     def load(self, tag):
         dump_db = TinyDB(
-            "store/" + tag + "_index.json"
+            "generated/" + tag + "_index.json"
         )
 
         terms_table = dump_db.table("terms")

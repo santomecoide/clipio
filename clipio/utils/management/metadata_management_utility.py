@@ -8,6 +8,7 @@ class MetadataManagementUtility:
     def __init__(self, settings):
         self.__metadata = settings.METADATA
         self.__coap_server = settings.COAP_SERVER
+        self.__mqtt = settings.MQTT
 
     def __fix_metadata(self):        
         for key, value in self.__metadata.items(): 
@@ -19,11 +20,12 @@ class MetadataManagementUtility:
             else:
                 self.__metadata[key] = value.strip()
 
-    def tags(self):
+    #borrar
+    """ def tags(self):
         tags = []
         for resource in self.__metadata['resources']:
             tags.append(resource['tag'])
-        return tags
+        return tags """
             
     def generate_metadata(self):
         self.__fix_metadata()
@@ -53,13 +55,17 @@ class MetadataManagementUtility:
                 "href": "coap://"+ domain +":"+ port +"/"+ name +"/"+ resource['tag'],
                 "methodName": "PUT"
             }
+
+            forms = [get_coap_form, put_coap_form]
+            if self.__mqtt['enabled']:
+                forms.append(mqtt_form)
             
             properties[resource['tag']] = {
                 "name": resource['name'],
                 "description": resource['description'],
                 "type": resource['type'],
                 "unit": resource['unit'],
-                "forms": [mqtt_form, get_coap_form, put_coap_form]    
+                "forms": forms    
             }
         
         metadata = {

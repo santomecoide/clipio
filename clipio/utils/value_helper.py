@@ -1,30 +1,11 @@
 import json
 from clipio import constants as CON
+from tinydb import TinyDB
 
 class ValueHelper:
     def __init__(self, tag, type_):
         self.__tag = tag
         self.__type = type_
-
-    def __busy(self):
-        try:
-            busy_file = open('generated/'+ self.__tag +'_busy.txt', 'r')
-            is_busy = bool(int(busy_file.read()))
-        except:
-            is_busy = True
-        finally:
-            busy_file.close()
-            return is_busy  
-
-    def __set_busy(self):
-        busy_file = open('generated/'+ self.__tag +'_busy.txt', 'w')
-        busy_file.write('1')
-        busy_file.close()
-
-    def __unset_busy(self):
-        busy_file = open('generated/'+ self.__tag +'_busy.txt', 'w')
-        busy_file.write('0')
-        busy_file.close()
 
     def __py_type(self):
         for accepted_type in CON.ACCEPTED_TYPES:
@@ -40,33 +21,30 @@ class ValueHelper:
 
     @property
     def value(self):
-        while self.__busy(): pass
-        self.__set_busy()
-
+        data_db = TinyDB("generated/data.json")    
         try:
-            with open('generated/'+ self.__tag +'.json') as fp:
-                data = json.load(fp)
-                value = self.__py_type()(data['value'])
+            table = data_db.table(self.__tag)
+            value = self.__py_type()(table.all()[0])
         except ValueError:
             value = self.__default()
-        finally:
-            self.__unset_busy()
-            return value
+        data_db.close()
+        return value
 
     @value.setter
     def value(self, input_value):        
+        data_db = TinyDB("generated/data.json")
         try:
-            typed_value = self.__py_type()(input_value)
-            
-            while self.__busy(): pass
-            self.__set_busy()
-            
-            with open('generated/'+ self.__tag +'.json', 'w') as fp:
-                json.dump({"value": typed_value}, fp)
-
-            self.__unset_busy()
+            data = {
+                "value": self.__py_type()(input_value)
+            }
+            table = data_db.table(self.__tag)
+            table.purge()
+            table.insert(data)
+            success = True
         except ValueError:
+            success = False
             print("incorrect value type")
-            #poner ("incorrect value type")
+        data_db.close()
+        return success
             
             

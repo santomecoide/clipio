@@ -2,7 +2,7 @@ import threading
 from coapthon.server.coap import CoAP
 
 from clipio.coap_resources.metadata import Metadata
-#from clipio.coap_resources.eca import Eca
+from clipio.coap_resources.eca import Eca
 from clipio.coap_resources.context import Context
 
 from clipio.utils.log import ErrorLog, InfoLog
@@ -24,7 +24,7 @@ class ServerManagementUtility():
         self.__coap.add_resource('metadata', Metadata())
         self.__resources.append('metadata')
 
-        #self.__coap.add_resource('eca', Eca())
+        self.__coap.add_resource('eca', Eca())
         self.__resources.append('eca')
 
         self.__coap.add_resource('context', Context(self.__ontologies))
@@ -39,8 +39,6 @@ class ServerManagementUtility():
             self.__resources.append(name)
         except ModuleNotFoundError:
             ErrorLog.show("class %s not found" % (name.capitalize()))
-        finally:
-            pass
 
     def __run(self):  
         InfoLog.show("server run in %s:%s" % (

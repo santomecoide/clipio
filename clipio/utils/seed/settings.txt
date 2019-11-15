@@ -9,14 +9,32 @@ METADATA = {
 			"name": "",
 			"description": "",
 			"type": "",
-			"unit": ""
+			"unit": "",
+			"mqtt": {
+				"enabled": True,
+				"delay_time": 60,
+				"qos": 0
+				"port": 1883,
+				"server": "",
+				"user": "",
+				"password": ""
+			}
 		},
 		{
 			"tag": "",
 			"name": "",
 			"description": "",
 			"type": "",
-			"unit": ""
+			"unit": "",
+			"mqtt": {
+				"enabled": True,
+				"delay_time": 60,
+				"qos": 0
+				"port": 1883,
+				"server": "",
+				"user": "",
+				"password": ""
+			}
 		}
 	]
 }
@@ -34,10 +52,22 @@ CRAWLER = {
 	"url_list": [] 
 }
 
+ECA = {
+	"enabled": True,
+	"coap_request_delay_time": 60
+	"mqtt_listener": {
+		"enable": False,
+		"port": 1883,
+		"server": "",
+		"user": "",
+		"password": "",
+	}
+}
+
 ONTOLOGIES = [
 	{ 
+		"enabled": True 
 		"tag": "home", 
 		"min_wup_similarity": 0.5,
-		"enabled": True 
 	}
 ]

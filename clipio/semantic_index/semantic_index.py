@@ -115,7 +115,7 @@ class SemanticIndex:
 
     #pasar texto a constantes
     def hot_docs(self, query):
-        context_db = TinyDB("store/contextdb.json")
+        context_db = TinyDB("generated/contextdb.json")
         self.load()
         
         query_terms = self.__get_tokens(query, "spanish")

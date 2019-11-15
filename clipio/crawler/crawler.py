@@ -15,7 +15,6 @@ class Crawler():
         
         self.__run_flag = False
         self.__url_crawling_yet = []
-        self.__enabled = self.__crawler['enabled']
         self.__delay_time = self.__crawler['delay_time']
 
         self.__semantic_index_list = []
@@ -34,8 +33,6 @@ class Crawler():
                 self.__crawler['protocol'],
                 self.__crawler['path']
             ))
-
-        print("crawler init")
 
     def __validate_metadata(self, metadata):
         validate = False
@@ -58,7 +55,7 @@ class Crawler():
 
     #pasar texto a constantes
     def __store(self, metadata):
-        context_db = TinyDB("store/contextdb.json")
+        context_db = TinyDB("generated/contextdb.json")
         match = context_db.search(Query()["id"] == metadata['id'])
         if len(match) > 0:
             context_db.update(metadata, Query()["id"] == metadata['id'])
@@ -70,7 +67,7 @@ class Crawler():
         spider = Spider(url)
         metadata, corpus_list = spider.collect()
         
-        if self.__validate_metadata(metadata):
+        if self.__validate_metadata(metadata) and self.__run_flag:
             self.__store(metadata)  
         
             if len(corpus_list) > 0:
@@ -84,7 +81,7 @@ class Crawler():
 
     def __run(self):
         self.__run_flag = True
-        while self.__run_flag & self.__enabled:
+        while self.__run_flag:
             for url in self.__url_list:
                 if url not in self.__url_crawling_yet: 
                     self.__url_crawling_yet.append(url)
@@ -102,9 +99,31 @@ class Crawler():
         print("Crawler end")
 
     def run(self):
-        run_thread = threading.Thread(target=self.__run)
-        run_thread.start()
+        if self.__crawler['enabled']:
+            components_db = TinyDB("generated/components.json")
+            crawler_data = {
+                "enabled": True
+            }
+            table_crawler = components_db.table('crawler')
+            table_crawler.purge()
+            table_crawler.insert(crawler_data)
+            components_db.close()
+            
+            run_thread = threading.Thread(target=self.__run)
+            run_thread.start()
+
+            print("crawler init")
 
     def stop(self):
-        self.__run_flag = False
-        print("stopping crawler...")
+        if self.__crawler['enabled']:
+            components_db = TinyDB("generated/components.json")
+            crawler_data = {
+                "enabled": False
+            }
+            table_crawler = components_db.table('crawler')
+            table_crawler.purge()
+            table_crawler.insert(crawler_data)
+            components_db.close()
+            
+            self.__run_flag = False
+            print("stopping crawler...")

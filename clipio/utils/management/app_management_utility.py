@@ -1,6 +1,7 @@
 import json
 import clipio.constants as CON
 from clipio.utils.seed import app_resource_seed
+from tinydb import TinyDB
 
 class AppManagementUtility:
     def __init__(self, settings):
@@ -12,13 +13,16 @@ class AppManagementUtility:
                 return accepted_type['default']
         return None
 
-    def __data_file(self, tag, type_):
-        busy_file = open('generated/'+ tag +'_busy.txt','w+')
-        busy_file.write('0')
-        busy_file.close()
-        
-        with open('generated/'+ tag +'.json', 'w') as fp:
-            json.dump({"value": self.__default_value(type_)}, fp)
+    def __data(self, tag, type_):
+        data = {
+            "value": self.__default_value(type_)
+        }
+
+        data_db = TinyDB("generated/data.json")    
+        table = data_db.table(tag)
+        table.purge()
+        table.insert(data)
+        data_db.close()
     
     def __dev_file(self, tag, type_):
         get_format_data = app_resource_seed.format(
@@ -30,8 +34,28 @@ class AppManagementUtility:
         get_file = open('app/'+ tag +'.py','w+')
         get_file.write(get_format_data)
         get_file.close()
+
+    def __components(self):        
+        components_db = TinyDB("generated/components.json")
+
+        crawler_data = {
+            "enabled": False
+        }
+        table_crawler = components_db.table('crawler')
+        table_crawler.purge()
+        table_crawler.insert(crawler_data)
+        
+        eca_data = {
+            "enabled": False
+        }
+        table_eca = components_db.table('eca')
+        table_eca.purge()
+        table_eca.insert(eca_data)
+        
+        components_db.close()
     
     def generate_files(self):
+        self.__components()
         for resource in self.__metadata['resources']:
             self.__dev_file(resource['tag'], resource['type'])
-            self.__data_file(resource['tag'], resource['type'])    
+            self.__data(resource['tag'], resource['type'])    

@@ -1,6 +1,7 @@
 import json
 import ast
 from urllib.parse import urlparse
+from tinydb import TinyDB
 
 from coapthon.client.helperclient import HelperClient
 from clipio import constants as CON
@@ -80,6 +81,13 @@ class Spider(object):
         self.__to_visit.append(self.__target_url)   
         corpus_list = []
         while len(self.__to_visit) > 0:
+            components_db = TinyDB("generated/components.json")
+            table_crawler = components_db.table('crawler')
+            enabled = table_crawler.all()[0]['enabled']
+            components_db.close()
+            if not enabled:
+                break
+            
             url = self.__to_visit.pop(0)
             data = self.__request(url)
             

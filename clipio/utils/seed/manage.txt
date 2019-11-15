@@ -9,8 +9,10 @@ from clipio.utils.management.settings_management_utility import SettingsManageme
 from clipio.utils.management.help_management_utility import HelpManagementUtility
 
 from clipio.crawler.crawler import Crawler
+from clipio.eca.eca import Eca
+from clipio.mqtt.mqtt_client import MqttClient
 
-def component_handler(components = []):
+def component_handler(components):
 	for component in components:
 		component.run()
 	try:
@@ -39,13 +41,15 @@ if __name__ == "__main__":
 			settings_mu = SettingsManagementUtility(settings)
 			metadata_mu = MetadataManagementUtility(settings)
 			crawler = Crawler(settings)
+			eca = Eca(settings)
+			mqtt = MqttClient(settings)
 			server_mu = ServerManagementUtility(settings)
 			
 			if settings_mu.validate():
 				for tag in metadata_mu.tags():
 					server_mu.add_iot_resource(tag) 
 				
-				component_handler([crawler, server_mu])				
+				component_handler([crawler, eca, server_mu, mqtt])				
 		
 		if com == "help" or com == "h":
 			help_mu.help()

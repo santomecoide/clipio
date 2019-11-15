@@ -4,19 +4,20 @@ import threading
 
 from tinydb import TinyDB
 
-from eca.greater import Greater 
-from eca.less import Less
-from eca.grater_or_equal import GreaterOrEqual
-from eca.less_or_equal import LessOrEqual
-from eca.equal import Equal
-from eca.not_equal import NotEqual
+from clipio.eca.greater import Greater 
+from clipio.eca.less import Less
+from clipio.eca.grater_or_equal import GreaterOrEqual
+from clipio.eca.less_or_equal import LessOrEqual
+from clipio.eca.equal import Equal
+from clipio.eca.not_equal import NotEqual
 
 """ hacer un modelo de eca """
 
-class Eca(threading.Thread):
+class Eca():
+    def __init__(self, settings):        
+        self.__eca = settings.ECA
 
-    def __init__(self):
-        threading.Thread.__init__(self)
+        self.__run_flag = False
         self.__eca_id_running = []
 
     def __get_id(self): 
@@ -25,27 +26,27 @@ class Eca(threading.Thread):
                 return id
 
     def __greater(self, eca_id):
-        gt = Greater(eca_id)
+        gt = Greater(eca_id, self.__eca)
         gt.set_listener()
 
     def __less(self, eca_id):
-        ls = Less(eca_id)
+        ls = Less(eca_id, self.__eca)
         ls.set_listener()
 
     def __greater_or_equal(self, eca_id):
-        gteq = GreaterOrEqual(eca_id)
+        gteq = GreaterOrEqual(eca_id, self.__eca)
         gteq.set_listener()
 
     def __less_or_equal(self, eca_id):
-        lseq = LessOrEqual(eca_id)
+        lseq = LessOrEqual(eca_id, self.__eca)
         lseq.set_listener()
 
     def __equal(self, eca_id):
-        eq = Equal(eca_id)
+        eq = Equal(eca_id, self.__eca)
         eq.set_listener()
 
     def __not_equal(self, eca_id):
-        neq = NotEqual(eca_id)
+        neq = NotEqual(eca_id, self.__eca)
         neq.set_listener()
 
     def __handler(self, eca):
@@ -66,28 +67,49 @@ class Eca(threading.Thread):
         )
         function(eca["id"])
 
+    def __run(self):
+        self.__run_flag = True
+        while self.__run_flag:
+            eca_db = TinyDB("ecadb.json")
+            for eca in eca_db.all():
+                if eca["id"] not in self.__eca_id_running:
+                    handler_thread = threading.Thread(
+                        target=self.__handler, 
+                        args=(eca, )
+                    )
+                    handler_thread.daemon = True
+                    handler_thread.start()
+                    self.__eca_id_running.append(eca["id"])
+            eca_db.close()
+
+        print("Eca end")
+
     def run(self):
-        try:
-            while True:
-                eca_db = TinyDB("ecadb.json")
-                for eca in eca_db.all():
-                    if eca["id"] not in self.__eca_id_running:
-                        handler_thread = threading.Thread(
-                            target=self.__handler, 
-                            args=(eca, )
-                        )
-                        handler_thread.start()
-                        self.__eca_id_running.append(eca["id"])
-                eca_db.close()
-        finally:
-            self.__eca_id_running = []
+        if self.__eca['enabled']:   
+            components_db = TinyDB("generated/components.json")
+            eca_data = {
+                "enabled": True
+            }
+            table_eca = components_db.table('eca')
+            table_eca.purge()
+            table_eca.insert(eca_data)
+            components_db.close()
+            
+            run_thread = threading.Thread(target=self.__run)
+            run_thread.start()
+            
+            print("eca init")
 
     def stop(self):
-        self.__eca_id_running.append(self.__get_id())
-        for thread_id in self.__eca_id_running:
-            res = ctypes.pythonapi.PyThreadState_SetAsyncExc(
-                thread_id, 
-                ctypes.py_object(SystemExit)
-            ) 
-            if res > 1: 
-                ctypes.pythonapi.PyThreadState_SetAsyncExc(thread_id, 0)
+        if self.__eca['enabled']:
+            components_db = TinyDB("generated/components.json")
+            eca_data = {
+                "enabled": False
+            }
+            table_eca = components_db.table('eca')
+            table_eca.purge()
+            table_eca.insert(eca_data)
+            components_db.close()
+            
+            self.__run_flag = False
+            print("stopping eca...")
