@@ -3,11 +3,11 @@ import ast
 
 from tinydb import TinyDB, Query
 from coapthon.resources.resource import Resource
+from clipio import constants as CON
 
 class Eca(Resource):
     def __init__(self):
         super(Eca, self).__init__("eca")
-        self.payload = "Eca Resource"
 
     def __update_state(self, state):
         def transform(doc):
@@ -16,7 +16,7 @@ class Eca(Resource):
         return transform
 
     def render_PUT(self, request):
-        eca_db = TinyDB("ecadb.json")
+        eca_db = TinyDB(CON.ECA_DB_PATH)
         
         data = ast.literal_eval(request.payload)
         eca_db.update(
@@ -28,7 +28,7 @@ class Eca(Resource):
         return self
     
     def render_POST(self, request):
-        eca_db = TinyDB("ecadb.json")
+        eca_db = TinyDB(CON.ECA_DB_PATH)
         data = ast.literal_eval(request.payload)
         event = {
             "type": data["event"]["type"],

@@ -13,11 +13,11 @@ class ServerManagementUtility():
         self.__ontologies = settings.ONTOLOGIES
         
         self.__resources = []
-        self.__domain = self.__coap_server['domain']
+        self.__host = self.__coap_server['host']
         self.__port = self.__coap_server['port']
         
         self.__coap = CoAP((
-            self.__domain, 
+            self.__host, 
             self.__port
         ))
         
@@ -42,7 +42,7 @@ class ServerManagementUtility():
 
     def __run(self):  
         InfoLog.show("server run in %s:%s" % (
-            self.__domain,
+            self.__host,
             self.__port
         ))
         for resource in self.__resources:

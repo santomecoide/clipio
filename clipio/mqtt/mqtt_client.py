@@ -20,7 +20,7 @@ class MqttClient():
         password = mqtt['password'].strip()
         if user and password:
             client.username_pw_set(user, password)
-        client.connect(mqtt['server'], mqtt['port'])
+        client.connect(mqtt['host'], mqtt['port'])
         client.reconnect()
         
         client.loop_start()

@@ -1,8 +1,8 @@
 from coapthon.resources.resource import Resource
 from tinydb import TinyDB, Query
-
 from clipio.semantic_index.semantic_index import SemanticIndex
 from clipio.semantic_index import ontologies
+from clipio import constants as CON
 
 class Context(Resource):
     def __init__(self, ontologies_settings):
@@ -21,7 +21,6 @@ class Context(Resource):
         fix_data = data.replace("'", '"')
         return fix_data
 
-    #pasar texto a constantes
     def render_GET(self, request):
         id_ = 0
         payload = {}
@@ -32,7 +31,7 @@ class Context(Resource):
         except IndexError:
             pass
         
-        context_db = TinyDB("generated/contextdb.json")
+        context_db = TinyDB(CON.CONTEXT_DB_PATH)
         match = context_db.search(Query()["id"] == id_)
         if len(match) > 0:
             payload = match[0]

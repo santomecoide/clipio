@@ -2,6 +2,8 @@ import sys
 import os
 import socket
 
+from clipio import constants as CON
+
 class ProjectManagementUtility:
     def __init__(self, project_name, root_path):
         self.__path = self.__fix(root_path)
@@ -13,15 +15,15 @@ class ProjectManagementUtility:
         return new_term
 
     def __gen_settings(self, path):
-        domain = socket.gethostbyname(socket.gethostname())
-        port = "5683"
+        host = socket.gethostbyname(socket.gethostname())
+        port = CON.DEFAULT_COAP_PORT
         
         seed = open('utils/seed/settings.txt','r')
         data = seed.read()
         seed.close()
 
         format_data = data.replace("{name}", self.__name)
-        format_data = format_data.replace("{domain}", domain)
+        format_data = format_data.replace("{host}", host)
         format_data = format_data.replace("{port}", port)
 
         settings_file = open(path + '/settings.py','w+')

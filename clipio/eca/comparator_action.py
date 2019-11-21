@@ -50,11 +50,11 @@ class ComparatorAction(ABC):
 
     def __set_coap_listener(self, href):
         url_components = urlparse(href)
-        netloc = url_components.netloc
+        hostname = url_components.hostname
         port = url_components.port
         path = self.__fix_path(url_components.path)
 
-        server = (netloc.split(":")[0], int(port))
+        server = (hostname, int(port))
         coap_client = HelperClient(server)
 
         break_ = False
@@ -133,9 +133,9 @@ class ComparatorAction(ABC):
 
         url_components = urlparse(href)
         port = url_components.port
-        server = url_components.netloc.split(":")[0]
+        hostname = url_components.hostname
 
-        client.connect(server, port)
+        client.connect(hostname, port)
 
         client.loop_start()
         while not self.__triggered:
@@ -168,11 +168,11 @@ class ComparatorAction(ABC):
         href = self.__get_action_href("coap")
         
         url_components = urlparse(href)
-        netloc = url_components.netloc
+        hostname = url_components.hostname
         port = url_components.port
         path = self.__fix_path(url_components.path)
 
-        server = (netloc.split(":")[0], int(port))
+        server = (hostname, int(port))
         coap_client = HelperClient(server)
         coap_client.put(path, str(const))
         

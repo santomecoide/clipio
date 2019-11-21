@@ -14,8 +14,8 @@ METADATA = {
 				"enabled": True,
 				"delay_time": 60,
 				"qos": 0
+				"host": "",
 				"port": 1883,
-				"server": "",
 				"user": "",
 				"password": ""
 			}
@@ -30,8 +30,8 @@ METADATA = {
 				"enabled": True,
 				"delay_time": 60,
 				"qos": 0
+				"host": "",
 				"port": 1883,
-				"server": "",
 				"user": "",
 				"password": ""
 			}
@@ -40,7 +40,7 @@ METADATA = {
 }
 
 COAP_SERVER = {
-	"domain": "{domain}",
+	"host": "{host}",
 	"port": {port}
 }
 
@@ -56,9 +56,7 @@ ECA = {
 	"enabled": True,
 	"coap_request_delay_time": 60
 	"mqtt_listener": {
-		"enable": False,
-		"port": 1883,
-		"server": "",
+		"enable": False
 		"user": "",
 		"password": "",
 	}

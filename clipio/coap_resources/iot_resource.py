@@ -1,10 +1,5 @@
-import ast
-import json
-from abc import abstractmethod
 from coapthon.resources.resource import Resource
-
 from clipio.utils.value_helper import ValueHelper
-import clipio.constants as CON
 
 class IotResource(Resource):
     def __init__(self, tag, type_):

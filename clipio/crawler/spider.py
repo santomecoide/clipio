@@ -1,8 +1,6 @@
 import json
-import ast
 from urllib.parse import urlparse
 from tinydb import TinyDB
-
 from coapthon.client.helperclient import HelperClient
 from clipio import constants as CON
 
@@ -40,8 +38,8 @@ class Spider(object):
         if str(url_components.scheme) == "coap":
             port = url_components.port
             if url_components.port is None:
-                port = CON.COAP_PORT
-            server = (url_components.netloc.split(':')[0], port)
+                port = CON.DEFAULT_COAP_PORT
+            server = (url_components.hostname, port)
             
             try:
                 client = HelperClient(server)

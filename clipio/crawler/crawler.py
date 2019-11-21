@@ -1,12 +1,10 @@
 import time
-import ctypes
 import threading
-
 from tinydb import TinyDB, Query
 from clipio.crawler.spider import Spider
-
 from clipio.semantic_index.semantic_index import SemanticIndex
 from clipio.semantic_index import ontologies
+from clipio import constants as CON
 
 class Crawler():
     def __init__(self, settings):
@@ -53,9 +51,8 @@ class Crawler():
             url = url + path_full
         return url
 
-    #pasar texto a constantes
     def __store(self, metadata):
-        context_db = TinyDB("generated/contextdb.json")
+        context_db = TinyDB(CON.CONTEXT_DB_PATH)
         match = context_db.search(Query()["id"] == metadata['id'])
         if len(match) > 0:
             context_db.update(metadata, Query()["id"] == metadata['id'])
@@ -100,7 +97,7 @@ class Crawler():
 
     def run(self):
         if self.__crawler['enabled']:
-            components_db = TinyDB("generated/components.json")
+            components_db = TinyDB(CON.COMPONENTS_PATH)
             crawler_data = {
                 "enabled": True
             }
@@ -116,7 +113,7 @@ class Crawler():
 
     def stop(self):
         if self.__crawler['enabled']:
-            components_db = TinyDB("generated/components.json")
+            components_db = TinyDB(CON.COMPONENTS_PATH)
             crawler_data = {
                 "enabled": False
             }

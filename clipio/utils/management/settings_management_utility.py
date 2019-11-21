@@ -1,8 +1,8 @@
 import json
+from urllib.parse import urlparse
 from clipio.utils.log import ErrorLog, InfoLog
 import clipio.constants as CON 
 
-#falta poner lo de las ontologias
 class SettingsManagementUtility:
     def __init__(self, settings):
         self.__metadata = settings.METADATA
@@ -46,19 +46,19 @@ class SettingsManagementUtility:
                     ErrorLog.show("metadata.resource.mqtt.delay_time must be greater than 0. You give: %s" % (mqtt['delay_time']))
                     correct = False
 
-                if mqtt['qos'] not in CON.ACCEPTED_QOS:
+                if mqtt['qos'] not in CON.ACCEPTED_MQTT_QOS:
                     ErrorLog.show("metadata.resource.mqtt.qos not found. Accepted values are: %s. You give: %s" % (
-                        str(CON.ACCEPTED_QOS),
+                        str(CON.ACCEPTED_MQTT_QOS),
                         mqtt['qos']
                     ))
                     correct = False
 
-                if not mqtt['port'].strip():
-                    ErrorLog.show("metadata.resource.mqtt.port can not be empty")
+                if not mqtt['host'].strip():
+                    ErrorLog.show("metadata.resource.mqtt.host can not be empty")
                     correct = False
 
-                if not mqtt['server'].strip():
-                    ErrorLog.show("metadata.resource.mqtt.server can not be empty")
+                if not mqtt['port'].strip():
+                    ErrorLog.show("metadata.resource.mqtt.port can not be empty")
                     correct = False
 
                 if mqtt['user'].strip() or mqtt['password'].strip():
@@ -81,8 +81,8 @@ class SettingsManagementUtility:
     def __coap_val(self):
         correct = True
 
-        if not self.__coap_server['domain'].strip():
-            ErrorLog.show("coap_server.domain can not be empty")
+        if not self.__coap_server['host'].strip():
+            ErrorLog.show("coap_server.host can not be empty")
             correct = False
 
         if not self.__coap_server['port']:
@@ -95,7 +95,7 @@ class SettingsManagementUtility:
         correct = True
 
         if self.__crawler['enabled']:
-            if self.__crawler['protocol'] not in CON.ACCEPTED_PROTOCOLS:
+            if self.__crawler['protocol'] not in CON.ACCEPTED_CRAWLER_PROTOCOLS:
                 ErrorLog.show("crawler.protocol not found. You give: %s" % (self.__crawler['protocol']))
                 correct = False
 
@@ -126,14 +126,6 @@ class SettingsManagementUtility:
 
             mqtt = self.__eca['mqtt']
             if mqtt['enabled']:
-                if not mqtt['port'].strip():
-                    ErrorLog.show("eca.mqtt.port can not be empty")
-                    correct = False
-
-                if not mqtt['server'].strip():
-                    ErrorLog.show("eca.mqtt.server can not be empty")
-                    correct = False
-
                 if mqtt['user'].strip() or mqtt['password'].strip():
                     if not mqtt['user'].strip():
                         ErrorLog.show("eca.mqtt.user can not be empty. You set password")
@@ -182,32 +174,75 @@ class SettingsManagementUtility:
         )
 
         if compare:
-            with open('generated/metadata.json') as fp:
-                metadata = json.load(fp)
+            metadata_file = open('generated/metadata.json','r')
+            data = metadata_file.read()
+            metadata_file.close()
+            metadata = json.load(data)
 
-                """ ver -> NAME 
-                    ver -> COAP_SERVER """
+            for resource in self.__metadata['resources']:
+                tag_found = False
+                for property_key in metadata['properties'].keys():
+                    if property_key == resource['tag']:
+                        property_ = metadata['properties'][property_key]
+                        
+                        if resource['type'] != property_['type']:
+                            ErrorLog.show(
+                                "metadata.resources.type bad generated. You give: %s. Use manage.py generate metadata" 
+                                % (resource['type'])
+                            )
+                            correct = False
 
-                for resource in self.__metadata['resources']:
-                    tag_found = False
-                    for property_key in metadata['properties'].keys():
-                        if property_key == resource['tag']:
-                            property_ = metadata['properties'][property_key]
-                            
-                            if resource['type'] != property_['type']:
-                                ErrorLog.show("%s not foun in metadata. use manage.py generate metadata" % (resource['type']))
+                        if resource['mqtt']['enabled']:
+                            mqtt_form_found = False
+                            for form in property_['forms']:
+                                if form['protocol'] == 'mqtt': 
+                                    url_components = urlparse(form['href'])
+
+                                    if url_components.hostname != resource['mqtt']['host']:
+                                        ErrorLog.show(
+                                            "metadata.resources.mqtt.host bad generated. You give: %s. Use manage.py generate metadata" 
+                                            % (resource['mqtt']['host'])
+                                        )
+                                        correct = False
+
+                                    if url_components.port != resource['mqtt']['port']:
+                                        ErrorLog.show(
+                                            "metadata.resources.mqtt.port bad generated. You give: %s. Use manage.py generate metadata" 
+                                            % (resource['mqtt']['port'])
+                                        )
+                                        correct = False
+                                    
+                                    mqtt_form_found = True
+
+                                else:
+                                    url_components = urlparse(form['href'])
+
+                                    if url_components.hostname != self.__coap_server['host']:
+                                        ErrorLog.show(
+                                            "coap_server.host bad generated. You give: %s. Use manage.py generate metadata" 
+                                            % (self.__coap_server['host'])
+                                        )
+                                        correct = False
+
+                                    if url_components.port != self.__coap_server['port']:
+                                        ErrorLog.show(
+                                            "coap_server.port bad generated. You give: %s. Use manage.py generate metadata" 
+                                            % (self.__coap_server['port'])
+                                        )
+                                        correct = False
+
+                            if not mqtt_form_found:
+                                ErrorLog.show("metadata.resources.mqtt bad generated. You enabled it. use manage.py generate metadata")
                                 correct = False
 
-                            """ if resource['mqtt']['enabled']:
-                                ver -> port
-				                ver -> server """
+                        tag_found = True
+                        break                        
+                
+                if not tag_found:
+                    ErrorLog.show(
+                        "metadata.resources.tag bad generated. You give: %s. Use manage.py generate metadata" 
+                        % (resource['tag'])
+                    )
+                    correct = False
 
-                            tag_found = True
-                            break                        
-                    
-                    if not tag_found:
-                        ErrorLog.show("%s not foun in metadata. use manage.py generate metadata" % (resource['tag']))
-                        correct = False
-
-        
         return correct

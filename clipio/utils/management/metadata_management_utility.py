@@ -30,29 +30,31 @@ class MetadataManagementUtility:
     def generate_metadata(self):
         self.__fix_metadata()
         
-        name = self.__metadata['name']
-        domain = self.__coap_server["domain"]
-        port = str(self.__coap_server["port"])
+        id_ = str(uuid.uuid1())
+        coap_host = self.__coap_server["host"]
+        coap_port = str(self.__coap_server["port"])
         
         properties = {}
         for resource in self.__metadata['resources']:
+            mqtt_host = resource['mqtt']['host']
+            mqtt_port = str(resource['mqtt']['port'])
             mqtt_form = {
                 "op": "readproperty",
                 "protocol": "mqtt",
-                "href": "mqtt://"+ domain +":"+ port +"/"+ name +"/"+ resource['tag']
+                "href": "mqtt://{host}:{port}/{id}/{tag}".format(mqtt_host, mqtt_port, id_, resource['tag'])
             }
             
             get_coap_form = {
                 "op": "readproperty",
                 "protocol": "coap",
-                "href": "coap://"+ domain +":"+ port +"/"+ name +"/"+ resource['tag'],
+                "href": "coap://{host}:{port}/{id}/{tag}".format(coap_host, coap_port, id_, resource['tag']),
                 "methodName": "GET"
             }
 
             put_coap_form = {
                 "op": "writeproperty",
                 "protocol": "coap",
-                "href": "coap://"+ domain +":"+ port +"/"+ name +"/"+ resource['tag'],
+                "href": "coap://{host}:{port}/{id}/{tag}".format(coap_host, coap_port, id_, resource['tag']),
                 "methodName": "PUT"
             }
 
@@ -69,8 +71,8 @@ class MetadataManagementUtility:
             }
         
         metadata = {
-            "id": str(uuid.uuid1()),
-            "name": name,
+            "id": id_,
+            "name": self.__metadata['name'],
             "description": self.__metadata['description'],
             "created": str(datetime.now()),
             "modified": str(datetime.now()),

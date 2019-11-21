@@ -1,7 +1,7 @@
-a = True
-b = True
-c = False
-d = True
+from urllib.parse import urlparse
+a = "mqtt://domain:port/project_name/topoic"
+url_components = urlparse(a)
 
-r = (a & b & c & d)
-print(r)
+path = url_components.path.split("/")
+
+print(url_components.hostname)
