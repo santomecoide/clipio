@@ -1,5 +1,7 @@
 NAME = "{name}"
 
+LANGUAGE = "es"
+
 METADATA = {
 	"name": "{name}",
 	"description": "",

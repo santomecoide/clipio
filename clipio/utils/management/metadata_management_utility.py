@@ -19,13 +19,6 @@ class MetadataManagementUtility:
                         self.__metadata[key][index][key2] = value2.strip() 
             else:
                 self.__metadata[key] = value.strip()
-
-    #borrar
-    """ def tags(self):
-        tags = []
-        for resource in self.__metadata['resources']:
-            tags.append(resource['tag'])
-        return tags """
             
     def generate_metadata(self):
         self.__fix_metadata()
@@ -79,7 +72,7 @@ class MetadataManagementUtility:
             "properties": properties
         } 
 
-        with open('generated/metadata.json', 'w') as fp:
+        with open(CON.METADATA_PATH, 'w') as fp:
             json.dump(metadata, fp)
 
         InfoLog.show("metadata generated")

@@ -11,7 +11,7 @@ from clipio.semantic_index.processor.metrics import Metrics
 
 from clipio import constants as CON
 
-#falta el idioma
+""" pending: falta el idioma como settings """
 class SemanticIndex:
     def __init__(self, settings, load_graph=True):
         self.__matrix = Matrix()
@@ -20,6 +20,7 @@ class SemanticIndex:
         self.__file = settings['file']
         self.__tag = settings['tag']
         self.__min_wup_similarity = settings['min_wup_similarity']
+        self.__language = 'es'
 
         if load_graph:
             self.__owl_terms = self.__owl_classes()
@@ -30,7 +31,7 @@ class SemanticIndex:
         result = graph.query(CON.ONTOLOGY_QUERY)
         filter_terms = []
         for row in result:
-            tokens = self.__get_tokens(row[1], "english")
+            tokens = self.__get_tokens(row[1], CON.LANGUAGE['en']['long'])
             for term in tokens:
                 filter_terms.append(term)
         filter_repeat_terms = list(dict.fromkeys(filter_terms))
@@ -55,9 +56,9 @@ class SemanticIndex:
 
     def __expand(self, term):
         expand_list = []
-        synsets = wn.synsets(term, lang="spa")
+        synsets = wn.synsets(term, lang=CON.LANGUAGE[self.__language]['middle'])
         for synset in synsets:
-            lemmas = synset.lemma_names('spa')
+            lemmas = synset.lemma_names(CON.LANGUAGE[self.__language]['middle'])
             for lemma in lemmas:
                 if lemma not in expand_list:
                     expand_list.append(lemma)
@@ -65,7 +66,7 @@ class SemanticIndex:
         return expand_list
 
     def __wup_similarity(self, term_a, term_b):        
-        term_a_list = wn.synsets(term_a, lang="spa")
+        term_a_list = wn.synsets(term_a, lang=CON.LANGUAGE[self.__language]['middle'])
         term_b_list = wn.synsets(term_b)
 
         if len(term_a_list) > 0:
@@ -90,7 +91,7 @@ class SemanticIndex:
 
     def __semantic_filter(self, text):
         filter_terms = []
-        tokens = self.__get_tokens(text, "spanish")
+        tokens = self.__get_tokens(text, CON.LANGUAGE[self.__language]['long'])
         for token in tokens:
             if self.__is_term_in_context(token):
                 filter_terms.append(token)
@@ -113,12 +114,11 @@ class SemanticIndex:
     def load(self):
         self.__matrix.load(self.__tag)
 
-    #pasar texto a constantes
     def hot_docs(self, query):
-        context_db = TinyDB("generated/contextdb.json")
+        context_db = TinyDB(CON.CONTEXT_DB_PATH)
         self.load()
         
-        query_terms = self.__get_tokens(query, "spanish")
+        query_terms = self.__get_tokens(query, CON.LANGUAGE[self.__language]['long'])
         query_expand_terms = []
         for term in query_terms:
             expand_list = self.__expand(term)

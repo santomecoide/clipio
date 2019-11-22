@@ -21,7 +21,7 @@ class ValueHelper:
 
     @property
     def value(self):
-        data_db = TinyDB("generated/data.json")    
+        data_db = TinyDB(CON.DATA_PATH)    
         try:
             table = data_db.table(self.__tag)
             value = self.__py_type()(table.all()[0])
@@ -32,7 +32,7 @@ class ValueHelper:
 
     @value.setter
     def value(self, input_value):        
-        data_db = TinyDB("generated/data.json")
+        data_db = TinyDB(CON.DATA_PATH)
         try:
             data = {
                 "value": self.__py_type()(input_value)

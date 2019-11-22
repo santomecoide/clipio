@@ -5,6 +5,7 @@ from clipio.crawler.spider import Spider
 from clipio.semantic_index.semantic_index import SemanticIndex
 from clipio.semantic_index import ontologies
 from clipio import constants as CON
+from clipio.utils.log import InfoLog
 
 class Crawler():
     def __init__(self, settings):
@@ -93,7 +94,7 @@ class Crawler():
                 if i > 0 and not self.__run_flag:
                     break
                 time.sleep(1)
-        print("Crawler end")
+        InfoLog.show("Crawler end")
 
     def run(self):
         if self.__crawler['enabled']:
@@ -109,7 +110,7 @@ class Crawler():
             run_thread = threading.Thread(target=self.__run)
             run_thread.start()
 
-            print("crawler init")
+            InfoLog.show("crawler init")
 
     def stop(self):
         if self.__crawler['enabled']:
@@ -123,4 +124,4 @@ class Crawler():
             components_db.close()
             
             self.__run_flag = False
-            print("stopping crawler...")
+            InfoLog.show("stopping crawler...")

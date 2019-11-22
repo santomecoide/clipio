@@ -3,6 +3,7 @@ from urllib.parse import urlparse
 from tinydb import TinyDB
 from coapthon.client.helperclient import HelperClient
 from clipio import constants as CON
+from clipio.utils.log import ErrorLog
 
 class Spider(object):
     def __init__(self, target_url):
@@ -46,9 +47,9 @@ class Spider(object):
                 response = client.get(url_components.path[1:])
                 data_dict = json.loads(response.payload)
             except:
-                #poner que hay problemas con la url
                 client = HelperClient(("8.8.8.8", 88))
                 data_dict = None
+                ErrorLog.show("Spider. Problems with url: %s" % (url))
             finally:
                 client.stop()
                             
@@ -79,7 +80,7 @@ class Spider(object):
         self.__to_visit.append(self.__target_url)   
         corpus_list = []
         while len(self.__to_visit) > 0:
-            components_db = TinyDB("generated/components.json")
+            components_db = TinyDB(CON.COMPONENTS_PATH)
             table_crawler = components_db.table('crawler')
             enabled = table_crawler.all()[0]['enabled']
             components_db.close()

@@ -1,8 +1,7 @@
-import os
-import ctypes
 import threading
-
 from tinydb import TinyDB
+from clipio import constants as CON
+from clipio.utils.log import InfoLog
 
 from clipio.eca.greater import Greater 
 from clipio.eca.less import Less
@@ -11,8 +10,7 @@ from clipio.eca.less_or_equal import LessOrEqual
 from clipio.eca.equal import Equal
 from clipio.eca.not_equal import NotEqual
 
-""" hacer un modelo de eca """
-
+""" pending: hacer un modelo de eca y validar """
 class Eca():
     def __init__(self, settings):        
         self.__eca = settings.ECA
@@ -70,7 +68,7 @@ class Eca():
     def __run(self):
         self.__run_flag = True
         while self.__run_flag:
-            eca_db = TinyDB("ecadb.json")
+            eca_db = TinyDB(CON.ECA_DB_PATH)
             for eca in eca_db.all():
                 if eca["id"] not in self.__eca_id_running:
                     handler_thread = threading.Thread(
@@ -82,11 +80,11 @@ class Eca():
                     self.__eca_id_running.append(eca["id"])
             eca_db.close()
 
-        print("Eca end")
+        InfoLog.show("Eca end")
 
     def run(self):
         if self.__eca['enabled']:   
-            components_db = TinyDB("generated/components.json")
+            components_db = TinyDB(CON.COMPONENTS_PATH)
             eca_data = {
                 "enabled": True
             }
@@ -98,11 +96,11 @@ class Eca():
             run_thread = threading.Thread(target=self.__run)
             run_thread.start()
             
-            print("eca init")
+            InfoLog.show("eca init")
 
     def stop(self):
         if self.__eca['enabled']:
-            components_db = TinyDB("generated/components.json")
+            components_db = TinyDB(CON.COMPONENTS_PATH)
             eca_data = {
                 "enabled": False
             }
@@ -112,4 +110,4 @@ class Eca():
             components_db.close()
             
             self.__run_flag = False
-            print("stopping eca...")
+            InfoLog.show("stopping eca...")

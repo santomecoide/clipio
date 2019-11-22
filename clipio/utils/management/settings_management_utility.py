@@ -174,7 +174,7 @@ class SettingsManagementUtility:
         )
 
         if compare:
-            metadata_file = open('generated/metadata.json','r')
+            metadata_file = open(CON.METADATA_PATH,'r')
             data = metadata_file.read()
             metadata_file.close()
             metadata = json.load(data)

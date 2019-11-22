@@ -25,7 +25,21 @@ ONTOLOGY_QUERY = """
     }
 """
 
+LANGUAGE = {
+    "es": {
+        "long": "spanish",
+        "short": "es",
+        "middle": "spa"
+    },
+    "en": {
+        "long": "english",
+        "short": "en",
+        "middle": "eng"
+    }
+}
+
 CONTEXT_DB_PATH = "generated/contextdb.json"
 ECA_DB_PATH = "generated/ecadb.json"
 METADATA_PATH = "generated/metadata.json"
 COMPONENTS_PATH = "generated/components.json"
+DATA_PATH = "generated/data.json"

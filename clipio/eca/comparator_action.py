@@ -1,4 +1,3 @@
-import sys
 import time
 from urllib.parse import urlparse
 from abc import ABC, abstractmethod
@@ -6,7 +5,8 @@ from abc import ABC, abstractmethod
 from paho.mqtt import client as mqtt
 from coapthon.client.helperclient import HelperClient
 from tinydb import TinyDB, Query
-import clipio.constants as CON
+from clipio import constants as CON
+from clipio.utils.log import ErrorLog
 
 class ComparatorAction(ABC):
     def __init__(self, eca_id, settings):
@@ -78,11 +78,11 @@ class ComparatorAction(ABC):
                     self.__condition_data["properties"]["value"]["const"]
                 )
             except:
-                break_ = True
+                ErrorLog.show("Coap listener. Problems with url: %s" % (href))
             
             if not break_:
                 for i in range(self.__settings['coap_request_delay_time']):
-                    components_db = TinyDB("generated/components.json")
+                    components_db = TinyDB(CON.COMPONENTS_PATH)
                     table_eca = components_db.table('eca')
                     enabled = table_eca.all()[0]['enabled']
                     components_db.close()
@@ -112,7 +112,8 @@ class ComparatorAction(ABC):
                 self.__condition_data["properties"]["value"]["const"]
             )
         except:
-            pass
+            href = self.__get_event_href("mqtt")
+            ErrorLog.show("Mqtt listener. Problems with url: %s" % (href))
 
     def __on_connect(self, client, userdata, flags, rc):
         href = self.__get_event_href("mqtt")
@@ -139,7 +140,7 @@ class ComparatorAction(ABC):
 
         client.loop_start()
         while not self.__triggered:
-            components_db = TinyDB("generated/components.json")
+            components_db = TinyDB(CON.COMPONENTS_PATH)
             table_eca = components_db.table('eca')
             enabled = table_eca.all()[0]['enabled']
             components_db.close()

@@ -1,4 +1,3 @@
-import json
 import clipio.constants as CON
 from clipio.utils.seed import app_resource_seed
 from tinydb import TinyDB
@@ -18,7 +17,7 @@ class AppManagementUtility:
             "value": self.__default_value(type_)
         }
 
-        data_db = TinyDB("generated/data.json")    
+        data_db = TinyDB(CON.DATA_PATH)    
         table = data_db.table(tag)
         table.purge()
         table.insert(data)
@@ -36,7 +35,7 @@ class AppManagementUtility:
         get_file.close()
 
     def __components(self):        
-        components_db = TinyDB("generated/components.json")
+        components_db = TinyDB(CON.COMPONENTS_PATH)
 
         crawler_data = {
             "enabled": False

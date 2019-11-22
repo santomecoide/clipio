@@ -14,7 +14,7 @@ class Equal(ComparatorAction):
             self.__trigger_action()
 
     def __boolean_switch(self, input_var, condition_const):
-        if input_var == "True" or input_var == "true":
+        """ if input_var == "True" or input_var == "true":
            input_var = 1
         if input_var == "False" or input_var == "false":
            input_var = 0
@@ -22,7 +22,7 @@ class Equal(ComparatorAction):
         if condition_const == "True" or condition_const == "true":
            condition_const = 1
         if condition_const == "False" or condition_const == "false":
-           condition_const = 0
+           condition_const = 0 """
 
         if int(input_var) == int(condition_const):
             self.__trigger_action()
