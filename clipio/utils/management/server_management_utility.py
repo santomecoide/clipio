@@ -49,7 +49,7 @@ class ServerManagementUtility():
             InfoLog.show("set service %s" % (resource))
             
         self.__coap.listen()
-        print("Server end")
+        InfoLog.show("Server end")
 
     def run(self):
         run_thread = threading.Thread(target=self.__run)
@@ -57,4 +57,4 @@ class ServerManagementUtility():
 
     def stop(self):
         self.__coap.close()
-        print("stopping server...")
+        InfoLog.show("stopping server...")

@@ -5,6 +5,7 @@ class IoTResourceManagementUtility:
     def __init__(self, settings):
         self.__metadata = settings.METADATA
 
+    """ pendding: pasar la ruta a constantes """
     def __generate_resource(self, resource):
         format_data = iot_resource_seed.format(
             resource['tag'].capitalize(), 

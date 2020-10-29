@@ -1,6 +1,7 @@
 import json
 from clipio import constants as CON
 from tinydb import TinyDB
+from clipio.utils.log import ErrorLog
 
 class ValueHelper:
     def __init__(self, tag, type_):
@@ -43,7 +44,9 @@ class ValueHelper:
             success = True
         except ValueError:
             success = False
-            print("incorrect value type")
+            ErrorLog.show("incorrect value type. Give: {}. Need: {}" 
+                .format(type(input_value), self.__py_type()) 
+            )
         data_db.close()
         return success
             

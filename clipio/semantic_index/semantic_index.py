@@ -127,7 +127,7 @@ class SemanticIndex:
 
         hot_list = []
         for doc in self.__matrix.docs:         
-            match = context_db.search(Query()["id"] == doc['id'])
+            match = context_db.search(Query()["id"] == doc["id"])
             if len(match) > 0:
                 distance_cos = self.__metrics.cos_vectors(doc['terms'], query_vector)
                 doc_data = {

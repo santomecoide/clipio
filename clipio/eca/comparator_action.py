@@ -6,14 +6,14 @@ from paho.mqtt import client as mqtt
 from coapthon.client.helperclient import HelperClient
 from tinydb import TinyDB, Query
 from clipio import constants as CON
-from clipio.utils.log import ErrorLog
+from clipio.utils.log import ErrorLog 
 
 class ComparatorAction(ABC):
     def __init__(self, eca_id, settings):
         self.__settings = settings
         self.__mqtt = settings['mqtt_listener']
         
-        eca_db = TinyDB("ecadb.json")
+        eca_db = TinyDB(CON.ECA_DB_PATH)
         eca = eca_db.search(Query().id == eca_id)[0]
         base = eca["actions"][eca["name"]]
         

@@ -92,6 +92,7 @@ class Matrix:
         s += '\n * Documents read: %d' % len(self.docs)
         return s
 
+    """ pendding: pasar la ruto a constantes """
     def dump(self, tag):
         dump_db = TinyDB(
             'generated/' + tag + '_index.json'
@@ -122,6 +123,7 @@ class Matrix:
 
         dump_db.close()
     
+    """ pendding: pasar la ruto a constantes """
     def load(self, tag):
         dump_db = TinyDB(
             "generated/" + tag + "_index.json"

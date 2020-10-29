@@ -14,6 +14,7 @@ class ProjectManagementUtility:
             new_term = term + chr(92) 
         return new_term
 
+    """ pendding: pasar la ruta a constantes """
     def __gen_settings(self, path):
         host = socket.gethostbyname(socket.gethostname())
         port = CON.DEFAULT_COAP_PORT
@@ -30,6 +31,7 @@ class ProjectManagementUtility:
         settings_file.write(format_data)
         settings_file.close()
 
+    """ pendding: pasar la ruta a constantes """
     def __gen_manager(self, path):
         seed = open('utils/seed/manage.txt','r')
         data = seed.read()

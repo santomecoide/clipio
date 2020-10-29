@@ -3,6 +3,7 @@ import threading
 from paho.mqtt import client as mqtt
 from tinydb import TinyDB, Query
 from clipio.utils.value_helper import ValueHelper
+from clipio.utils.log import InfoLog, ErrorLog
 
 class MqttClient():
     def __init__(self, settings):
@@ -29,8 +30,8 @@ class MqttClient():
                 payload = value_helper.value
                 client.publish(topic, payload, qos)
             except:
-                print("can not publish")
-            
+                ErrorLog.show("Mqtt. can not publish %s to %s" % (payload, topic))
+                
             for i in range(mqtt['delay_time']):
                 if i > 0 and not self.__run_flag:
                     break
@@ -47,7 +48,7 @@ class MqttClient():
                     args=(resource,))
                 push_thread.start() 
 
-        print("Mqtt client end")
+        InfoLog.show("Mqtt client end")
         
     def run(self):
         run_ = False
@@ -60,7 +61,7 @@ class MqttClient():
             run_thread = threading.Thread(target=self.__run)
             run_thread.start()
 
-            print("mqtt client init")
+            InfoLog.show("Mqtt client init")
 
     def stop(self):
         run_ = False

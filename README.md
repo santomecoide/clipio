@@ -1,8 +1,8 @@
-# Clipio Framework
-semantic interoperability iot framework
+# Clipio
+Semantic Interoperability IoT Framework
 
 # requires
-* python 3.7
+* python 3
 * coapthon (Version 4) -> https://github.com/Tanganelli/CoAPthon -> pip install CoAPthon3
 * paho (Version 1) -> https://pypi.org/project/paho-mqtt -> pip install paho-mqtt
 * tinydb (Version 3) -> https://tinydb.readthedocs.io/en/latest/intro.html -> pip install tinydb
