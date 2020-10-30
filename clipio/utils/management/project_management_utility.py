@@ -2,7 +2,7 @@ import sys
 import os
 import socket
 
-from clipio import constants as CON
+import constants as CON
 
 class ProjectManagementUtility:
     def __init__(self, project_name, root_path):

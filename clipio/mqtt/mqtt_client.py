@@ -1,6 +1,6 @@
 import time
 import threading
-from paho.mqtt import client as mqtt
+from paho.mqtt import client as paho_mqtt_client
 from tinydb import TinyDB, Query
 from clipio.utils.value_helper import ValueHelper
 from clipio.utils.log import InfoLog, ErrorLog
@@ -16,7 +16,7 @@ class MqttClient():
         qos = mqtt['qos']
         topic = self.__metadata['name'] + "/" + resource['tag']
         
-        client = mqtt.Client()
+        client = paho_mqtt_client.Client()
         user = mqtt['user'].strip()
         password = mqtt['password'].strip()
         if user and password:
@@ -30,7 +30,7 @@ class MqttClient():
                 payload = value_helper.value
                 client.publish(topic, payload, qos)
             except:
-                ErrorLog.show("Mqtt. can not publish %s to %s" % (payload, topic))
+                ErrorLog.show(f"Mqtt. can not publish %s to %s" % (payload, topic))
                 
             for i in range(mqtt['delay_time']):
                 if i > 0 and not self.__run_flag:

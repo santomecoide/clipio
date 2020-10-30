@@ -89,7 +89,7 @@ class Eca():
                 "enabled": True
             }
             table_eca = components_db.table('eca')
-            table_eca.purge()
+            table_eca.truncate()
             table_eca.insert(eca_data)
             components_db.close()
             
@@ -105,7 +105,7 @@ class Eca():
                 "enabled": False
             }
             table_eca = components_db.table('eca')
-            table_eca.purge()
+            table_eca.truncate()
             table_eca.insert(eca_data)
             components_db.close()
             

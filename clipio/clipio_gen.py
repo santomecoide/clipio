@@ -14,7 +14,8 @@ if __name__ == "__main__":
             project_mu.generate_project()
         if com == "help":
             help_mu.help()
-    except IndexError:
+    except IndexError as e:
+        print(e)
         help_mu.help()
 
         

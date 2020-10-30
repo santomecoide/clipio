@@ -8,7 +8,6 @@ class MetadataManagementUtility:
     def __init__(self, settings):
         self.__metadata = settings.METADATA
         self.__coap_server = settings.COAP_SERVER
-        self.__mqtt = settings.MQTT
 
     def __fix_metadata(self):        
         for key, value in self.__metadata.items(): 
@@ -16,7 +15,10 @@ class MetadataManagementUtility:
                 for v in value:
                     for key2, value2 in v.items():
                         index = value.index(v)
-                        self.__metadata[key][index][key2] = value2.strip() 
+                        if type(value2) is dict: 
+                            self.__metadata[key][index][key2] = value2
+                        else:
+                            self.__metadata[key][index][key2] = value2.strip()
             else:
                 self.__metadata[key] = value.strip()
             
@@ -34,25 +36,25 @@ class MetadataManagementUtility:
             mqtt_form = {
                 "op": "readproperty",
                 "protocol": "mqtt",
-                "href": "mqtt://{host}:{port}/{id}/{tag}".format(mqtt_host, mqtt_port, id_, resource['tag'])
+                "href": f"mqtt://{mqtt_host}:{mqtt_port}/{id_}/{resource['tag']}"
             }
             
             get_coap_form = {
                 "op": "readproperty",
                 "protocol": "coap",
-                "href": "coap://{host}:{port}/{id}/{tag}".format(coap_host, coap_port, id_, resource['tag']),
+                "href": f"coap://{coap_host}:{coap_port}/{id_}/{resource['tag']}",
                 "methodName": "GET"
             }
 
             put_coap_form = {
                 "op": "writeproperty",
                 "protocol": "coap",
-                "href": "coap://{host}:{port}/{id}/{tag}".format(coap_host, coap_port, id_, resource['tag']),
+                "href": f"coap://{coap_host}:{coap_port}/{id_}/{resource['tag']}",
                 "methodName": "PUT"
             }
 
             forms = [get_coap_form, put_coap_form]
-            if self.__mqtt['enabled']:
+            if resource['mqtt']['enabled']:
                 forms.append(mqtt_form)
             
             properties[resource['tag']] = {
@@ -76,3 +78,9 @@ class MetadataManagementUtility:
             json.dump(metadata, fp)
 
         InfoLog.show("metadata generated")
+
+    def tags(self):
+        tags = []
+        for resource in self.__metadata['resources']:
+            tags.append(resource['tag'])
+        return tags

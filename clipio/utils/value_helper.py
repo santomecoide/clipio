@@ -25,7 +25,7 @@ class ValueHelper:
         data_db = TinyDB(CON.DATA_PATH)    
         try:
             table = data_db.table(self.__tag)
-            value = self.__py_type()(table.all()[0])
+            value = self.__py_type()(table.all()[0]['value'])
         except ValueError:
             value = self.__default()
         data_db.close()
@@ -39,7 +39,7 @@ class ValueHelper:
                 "value": self.__py_type()(input_value)
             }
             table = data_db.table(self.__tag)
-            table.purge()
+            table.truncate()
             table.insert(data)
             success = True
         except ValueError:

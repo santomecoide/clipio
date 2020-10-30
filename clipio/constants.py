@@ -10,7 +10,7 @@ ACCEPTED_CRAWLER_PROTOCOLS = ['coap']
 
 MIN_CRAWLER_DELAY_TIME = 3600 #1h
 
-DEFAULT_COAP_PORT = 5683
+DEFAULT_COAP_PORT = "5683"
 
 URL_KEY_WORDS = ["href", "link"]
 METADATA_KEY_WORDS = ["name", "description", "title"]

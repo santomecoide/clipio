@@ -19,7 +19,7 @@ class AppManagementUtility:
 
         data_db = TinyDB(CON.DATA_PATH)    
         table = data_db.table(tag)
-        table.purge()
+        table.truncate()
         table.insert(data)
         data_db.close()
     
@@ -41,14 +41,14 @@ class AppManagementUtility:
             "enabled": False
         }
         table_crawler = components_db.table('crawler')
-        table_crawler.purge()
+        table_crawler.truncate()
         table_crawler.insert(crawler_data)
         
         eca_data = {
             "enabled": False
         }
         table_eca = components_db.table('eca')
-        table_eca.purge()
+        table_eca.truncate()
         table_eca.insert(eca_data)
         
         components_db.close()

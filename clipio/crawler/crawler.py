@@ -103,7 +103,7 @@ class Crawler():
                 "enabled": True
             }
             table_crawler = components_db.table('crawler')
-            table_crawler.purge()
+            table_crawler.truncate()
             table_crawler.insert(crawler_data)
             components_db.close()
             
@@ -119,7 +119,7 @@ class Crawler():
                 "enabled": False
             }
             table_crawler = components_db.table('crawler')
-            table_crawler.purge()
+            table_crawler.truncate()
             table_crawler.insert(crawler_data)
             components_db.close()
             

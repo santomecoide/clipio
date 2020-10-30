@@ -15,7 +15,7 @@ METADATA = {
 			"mqtt": {
 				"enabled": True,
 				"delay_time": 60,
-				"qos": 0
+				"qos": 0,
 				"host": "",
 				"port": 1883,
 				"user": "",
@@ -31,7 +31,7 @@ METADATA = {
 			"mqtt": {
 				"enabled": True,
 				"delay_time": 60,
-				"qos": 0
+				"qos": 0,
 				"host": "",
 				"port": 1883,
 				"user": "",
@@ -56,9 +56,9 @@ CRAWLER = {
 
 ECA = {
 	"enabled": True,
-	"coap_request_delay_time": 60
+	"coap_request_delay_time": 60,
 	"mqtt_listener": {
-		"enable": False
+		"enabled": False,
 		"user": "",
 		"password": "",
 	}
@@ -66,7 +66,7 @@ ECA = {
 
 ONTOLOGIES = [
 	{ 
-		"enabled": True 
+		"enabled": True, 
 		"tag": "home", 
 		"min_wup_similarity": 0.5,
 	}

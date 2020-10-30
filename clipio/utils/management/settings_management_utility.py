@@ -57,7 +57,7 @@ class SettingsManagementUtility:
                     ErrorLog.show("metadata.resource.mqtt.host can not be empty")
                     correct = False
 
-                if not mqtt['port'].strip():
+                if not mqtt['port']:
                     ErrorLog.show("metadata.resource.mqtt.port can not be empty")
                     correct = False
 
@@ -124,7 +124,7 @@ class SettingsManagementUtility:
                 ErrorLog.show("eca.coap_request_delay_time must be greater than 0. You give: %s" % (self.__eca['coap_request_delay_time']))
                 correct = False
 
-            mqtt = self.__eca['mqtt']
+            mqtt = self.__eca['mqtt_listener']
             if mqtt['enabled']:
                 if mqtt['user'].strip() or mqtt['password'].strip():
                     if not mqtt['user'].strip():
@@ -141,7 +141,7 @@ class SettingsManagementUtility:
         correct = True
 
         if self.__crawler['enabled']:
-            if len(self.__ontologies) > 0:
+            if len(self.__ontologies) <= 0:
                 ErrorLog.show("if enable crawler, you must be have 1 ontology at least")
                 correct = False
 
@@ -166,10 +166,10 @@ class SettingsManagementUtility:
         correct = True
         
         correct = (
-            self.__metadata_val() &
-            self.__coap_val() &
-            self.__crawler_val &
-            self.__eca_val() &
+            self.__metadata_val() and 
+            self.__coap_val() and 
+            self.__crawler_val and 
+            self.__eca_val() and 
             self.__ontologies_val()
         )
 
@@ -177,7 +177,7 @@ class SettingsManagementUtility:
             metadata_file = open(CON.METADATA_PATH,'r')
             data = metadata_file.read()
             metadata_file.close()
-            metadata = json.load(data)
+            metadata = json.loads(data)
 
             for resource in self.__metadata['resources']:
                 tag_found = False
